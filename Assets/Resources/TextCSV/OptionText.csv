@@ -1,0 +1,16 @@
+Index,Korean,English,Japanese
+0,게임 설정,Game Setting,ゲーム設定
+1,해상도 설정,Resolution,解像度設定
+2,"1920 * 1080</n>전체 화면","1920 * 1080</n>FullScreen","1920 * 1080</n>フルスクリーン"
+3,"1600 * 900</n>창 모드","1600 * 900</n>Windowed","1600 * 900</n>ウィンドウ"
+4,"1440 * 810</n>창 모드","1440 * 810</n>Windowed","1440 * 810</n>ウィンドウ"
+5,"1280 * 720</n>창 모드","1280 * 720</n>Windowed","1280 * 720</n>ウィンドウ"
+6,전체 음량,Master Volume,全体音量
+7,효과음,SFX,効果音
+8,배경음,BGM,背景音
+9,언어 설정,Language,言語
+10,한국어,한국어,한국어
+11,English,English,English
+12,日本語,日本語,日本語
+13,메인 화면,Main Screen,"メイン画面"
+14,"설정 완료","Finish setting","設定完了"
