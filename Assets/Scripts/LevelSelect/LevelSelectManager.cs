@@ -46,7 +46,14 @@ public class LevelSelectManager : MonoBehaviour
 
         GameManager.Instance.LoadSelectedLevelData();
 
-        StartCoroutine( AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.Play));
+        if (GameManager.Instance.selectedLevel == 0)
+        {
+            StartCoroutine(AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.Play));
+        }
+        else
+        {
+            StartCoroutine(AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.Play));
+        }
     }
 
     //Text

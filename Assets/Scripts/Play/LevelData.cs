@@ -59,4 +59,20 @@ public class LevelData : ScriptableObject
     {
         get { return taroCardNum; }
     }
+
+    public List<List<Card>> GetSetting()
+    {
+        List<List<Card>> settingData = new List<List<Card>> 
+        { 
+            redField,
+            blueField,
+            whiteField,
+            playerCards,
+            cpu1Cards,
+            cpu2Cards,
+            cpu3Cards 
+        };
+
+        return settingData;
+    }
 }

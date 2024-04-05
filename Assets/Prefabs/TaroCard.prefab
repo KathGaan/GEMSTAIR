@@ -147,6 +147,8 @@ GameObject:
   - component: {fileID: 7373530019025441899}
   - component: {fileID: 1650549835084864914}
   - component: {fileID: 2703506037835590441}
+  - component: {fileID: 785985176980887923}
+  - component: {fileID: -7098043325756015357}
   m_Layer: 5
   m_Name: TaroCard
   m_TagString: Untagged
@@ -196,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0.5, a: 0}
+  m_Color: {r: 0.74509805, g: 0.9490196, b: 0.9137255, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -282,7 +284,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoImage: {fileID: 2254422717387710362}
-  cardNum: 0
+  cardNum: 4
+  cardImage: {fileID: 0}
+--- !u!114 &785985176980887923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248514580190368045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974b9dd54c65b3445a3527929ed726f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+    num: 0
+    color: 0
+--- !u!225 &-7098043325756015357
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248514580190368045}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5707744220672799250
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,14 +371,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8113208, g: 0.63180405, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 214be0fdd0bda5a43ae3440a2669076c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -424,7 +454,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 953f1ac191f1fcc4691df263cd382209, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

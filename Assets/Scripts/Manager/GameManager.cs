@@ -14,12 +14,22 @@ public class GameManager : MonoSingletonManager<GameManager>
         get { return currentLevelData; }
     }
 
-    private List<int> selectedTaroCards;
+    private List<int> selectedTaroCards = new List<int>();
 
     public List<int> SelectedTaroCards
     {
         get { return selectedTaroCards; }
     }
+
+    private PlayManager playManager;
+
+    public PlayManager PlayManager
+    {
+        set { playManager = value; }
+        get { return playManager; }
+    }
+
+    static public GameObject dragObject;
 
     //PlayBefore
     public void LoadSelectedLevelData()
@@ -31,6 +41,7 @@ public class GameManager : MonoSingletonManager<GameManager>
     {
         selectedTaroCards.Clear();
         selectedTaroCards.AddRange(cards);
+        playManager.StartTaroSetting();
     }
 }
 
