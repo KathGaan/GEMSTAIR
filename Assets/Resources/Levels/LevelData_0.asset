@@ -43,4 +43,4 @@ MonoBehaviour:
   cpu3Cards:
   - num: 4
     color: 2
-  taroCardNum: 2
+  taroCardNum: 3

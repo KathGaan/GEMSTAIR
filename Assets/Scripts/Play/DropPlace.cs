@@ -7,7 +7,8 @@ public abstract class DropPlace :MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        if (!Task()) return;
+        if (!Task())
+            return;
 
         GameManager.dragObject.transform.SetParent(transform);
 

@@ -16,7 +16,7 @@ public class DragObject : MonoBehaviour , IDragHandler , IEndDragHandler, IBegin
         set { info = value; }
         get { return info; }
     }
-    
+
     //Start
     private void Start()
     {
@@ -33,6 +33,8 @@ public class DragObject : MonoBehaviour , IDragHandler , IEndDragHandler, IBegin
     public void OnBeginDrag(PointerEventData eventData)
     {
         GameManager.dragObject = gameObject;
+
+        StartCoroutine(GameManager.Instance.PlayManager.SetCanPlace());
 
         GameManager.dragObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 

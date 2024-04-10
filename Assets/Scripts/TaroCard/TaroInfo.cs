@@ -21,6 +21,8 @@ public class TaroInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         get { return cardNum; }
     }
 
+    [SerializeField] TaroDataBase dataBase;
+
     //Start
 
     private void Start()
@@ -43,6 +45,11 @@ public class TaroInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private void ImageSetting()
     {
         cardImage.sprite = ResourcesManager.Instance.Load<Sprite>("TaroImage/" + cardNum);
+
+        if (GetComponent<DragObject>() != null)
+        {
+            GetComponent<DragObject>().Info = dataBase.TaroDatas[cardNum];
+        }
     }
 
 

@@ -376,8 +376,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 789ea2d38f678c14d83e486b4e1e886d, type: 2}
-  m_sharedMaterial: {fileID: 5841213964744769336, guid: 789ea2d38f678c14d83e486b4e1e886d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
+  m_sharedMaterial: {fileID: 2720364492470797027, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -510,8 +510,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 789ea2d38f678c14d83e486b4e1e886d, type: 2}
-  m_sharedMaterial: {fileID: 5841213964744769336, guid: 789ea2d38f678c14d83e486b4e1e886d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
+  m_sharedMaterial: {fileID: 2720364492470797027, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -791,8 +791,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 789ea2d38f678c14d83e486b4e1e886d, type: 2}
-  m_sharedMaterial: {fileID: 5841213964744769336, guid: 789ea2d38f678c14d83e486b4e1e886d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
+  m_sharedMaterial: {fileID: 2720364492470797027, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1063,6 +1063,10 @@ PrefabInstance:
     - target: {fileID: 2386014664749012823, guid: 33d0243b13389f74a8222298772c5c94, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294406714
+      objectReference: {fileID: 0}
+    - target: {fileID: 2386014664749012823, guid: 33d0243b13389f74a8222298772c5c94, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8170592858553689000, guid: 33d0243b13389f74a8222298772c5c94, type: 3}
       propertyPath: m_Name

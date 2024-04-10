@@ -75,7 +75,21 @@ public class AsyncSceneLoadManager : MonoSingletonManager<AsyncSceneLoadManager>
     {
         yield return YieldCache.WaitForSeconds(0.2f);
 
-        SoundManager.Instance.BGMPlay(bgms.Clips[Random.Range(0, bgms.Clips.Length)]);
+        switch (nowScene)
+        {
+            case SceneName.MainMenu:
+                SoundManager.Instance.BGMPlay(bgms.Clips[0]);
+                break;
+            case SceneName.LevelSelect:
+                SoundManager.Instance.BGMPlay(bgms.Clips[1]);
+                break;
+            case SceneName.Play:
+                SoundManager.Instance.BGMPlay(bgms.Clips[2]);
+                break;
+            case SceneName.PlayTutorial:
+                SoundManager.Instance.BGMPlay(bgms.Clips[2]);
+                break;
+        }
 
         sceneLoadUI.SetActive(false);
     }

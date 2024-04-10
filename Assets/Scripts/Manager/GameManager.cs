@@ -34,7 +34,11 @@ public class GameManager : MonoSingletonManager<GameManager>
     //PlayBefore
     public void LoadSelectedLevelData()
     {
-        currentLevelData = ResourcesManager.Instance.LoadScript(selectedLevel);
+        LevelData levelData = ScriptableObject.CreateInstance<LevelData>();
+
+        ResourcesManager.Instance.LoadScript(selectedLevel).DeepCopy(levelData);
+
+        currentLevelData = levelData;
     }
 
     public void SetTaroCards(List<int> cards)
@@ -50,6 +54,14 @@ public class Card
 {
     public int num;
     public CardColor color;
+
+    public Card() { }
+
+    public Card(Card other)
+    {
+        this.color = other.color;
+        this.num = other.num;
+    }
 }
 
 [Serializable]
@@ -57,5 +69,6 @@ public enum CardColor
 {
     Red,
     Blue,
-    White
+    White,
+    None
 }

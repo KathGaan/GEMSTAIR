@@ -60,9 +60,51 @@ public class LevelData : ScriptableObject
         get { return taroCardNum; }
     }
 
+    public void DeepCopy(LevelData cdata)
+    {
+        cdata.redField = new List<Card>();
+        cdata.blueField = new List<Card>();
+        cdata.whiteField = new List<Card>();
+        cdata.playerCards = new List<Card>();
+        cdata.cpu1Cards = new List<Card>();
+        cdata.cpu2Cards = new List<Card>();
+        cdata.cpu3Cards = new List<Card>();
+
+        foreach (Card card in redField)
+        {
+            cdata.redField.Add(new Card(card));
+        }
+        foreach (Card card in blueField)
+        {
+            cdata.blueField.Add(new Card(card));
+        }
+        foreach (Card card in whiteField)
+        {
+            cdata.whiteField.Add(new Card(card));
+        }
+        foreach (Card card in playerCards)
+        {
+            cdata.playerCards.Add(new Card(card));
+        }
+        foreach (Card card in cpu1Cards)
+        {
+            cdata.cpu1Cards.Add(new Card(card));
+        }
+        foreach (Card card in cpu2Cards)
+        {
+            cdata.cpu2Cards.Add(new Card(card));
+        }
+        foreach (Card card in cpu3Cards)
+        {
+            cdata.cpu3Cards.Add(new Card(card));
+        }
+
+        cdata.taroCardNum = taroCardNum;
+    }
+
     public List<List<Card>> GetSetting()
     {
-        List<List<Card>> settingData = new List<List<Card>> 
+        List<List<Card>> settingData = new List<List<Card>> ()
         { 
             redField,
             blueField,
