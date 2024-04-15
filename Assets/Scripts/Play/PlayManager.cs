@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,6 +54,8 @@ public class PlayManager : MonoBehaviour
     private TaroFunction taroFunction;
     [SerializeField] Animator taroAnim;
 
+    [SerializeField] GameObject clearUI;
+
     [SerializeField] List<GameObject> canPlaces;
 
     [SerializeField] Transform destroyGem;
@@ -81,13 +84,22 @@ public class PlayManager : MonoBehaviour
         get { return return20; }
     }
 
-    private int skipPlayer;
+    private int skipCpuAfter;
 
-    public int SkipPlayer
+    public int SkipCpuAfter
     {
-        set { skipPlayer = value; }
-        get { return skipPlayer; }
+        set { skipCpuAfter = value; }
+        get { return skipCpuAfter; }
     }
+
+    private string popUpText;
+
+    public string PopUpText
+    {
+        get { return popUpText; }
+    }
+
+    [SerializeField] SoundClip soundClip;
 
     //Start
     private void Start()
@@ -140,18 +152,11 @@ public class PlayManager : MonoBehaviour
 
         waitIAnim.SetTrigger("PlayerTurn");
 
+        SoundManager.Instance.SFXPlay(soundClip.Clips[0]);
+
         yield return YieldCache.WaitForSeconds(1.5f);
 
         waitImage.gameObject.SetActive(false);
-
-        if (skipPlayer > 0)
-        {
-            skipPlayer--;
-            if (skipPlayer == 0)
-            {
-                SkipTurn();
-            }
-        }
     }
 
     public void SkipTurn()
@@ -159,15 +164,46 @@ public class PlayManager : MonoBehaviour
         StartCoroutine(CpuTurnStart());
     }
 
+    private void LevelClear()
+    {
+        popUpText = "Clear!";
+
+        clearUI.SetActive(true);
+
+        SoundManager.Instance.SFXPlay(soundClip.Clips[2]);
+
+        DataManager.Instance.SaveClearData(GameManager.Instance.selectedLevel);
+    }
+
     //CpuTurn
 
     public IEnumerator CpuTurnStart()
     {
+        if(GameManager.Instance.CurrentLevelData.PlayerCards.Count == 0)
+        {
+            LevelClear();
+            yield break;
+        }
+
+        if(skipCpuAfter > 0)
+        {
+            skipCpuAfter--;
+            if(skipCpuAfter <= 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    CpuSkip[i] = true;
+                }
+            }
+        }
+
         GameManager.dragObject = null;
 
         waitImage.gameObject.SetActive(true);
 
         waitIAnim.SetTrigger("CpuTurn");
+
+        SoundManager.Instance.SFXPlay(soundClip.Clips[1]);
 
         yield return YieldCache.WaitForSeconds(1.5f);
 
@@ -205,7 +241,15 @@ public class PlayManager : MonoBehaviour
                 {
                     CpuUse(i , dummy[0]);
 
+
                     yield return YieldCache.WaitForSeconds(0.5f);
+
+                    if(dummy.Count <= 0)
+                    {
+                        LevelFailed();
+
+                        yield break;
+                    }
 
                     break;
                 }
@@ -266,6 +310,8 @@ public class PlayManager : MonoBehaviour
 
     private void CpuUse(int i , Card card)
     {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[4]);
+
         switch (i)
         {
             case 0:
@@ -305,6 +351,8 @@ public class PlayManager : MonoBehaviour
 
     private void ChangeCpuHand(int i , List<Card> dummy)
     {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[5]);
+
         dummy.Add(dummy[0]);
         dummy.RemoveAt(0);
 
@@ -313,10 +361,21 @@ public class PlayManager : MonoBehaviour
 
     public void ChangeCpuHand(int i)
     {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[5]);
+
         GetCpuParent((CardColor)i).Add(GetCpuParent((CardColor)i)[0]);
         GetCpuParent((CardColor)i).RemoveAt(0);
 
         settingTransforms[4 + i].GetChild(0).SetAsLastSibling();
+    }
+
+    private void LevelFailed()
+    {
+        popUpText = "Failed...";
+
+        clearUI.SetActive(true);
+
+        SoundManager.Instance.SFXPlay(soundClip.Clips[3]);
     }
 
     //Taro
@@ -334,7 +393,9 @@ public class PlayManager : MonoBehaviour
     public IEnumerator ActiveTaroEffect()
     {
         taroAnim.gameObject.SetActive(true);
-        taroAnim.SetTrigger(usedTaroObj.GetComponent<TaroInfo>().CardNum + "");
+        taroAnim.Play(usedTaroObj.GetComponent<TaroInfo>().CardNum + "");
+
+        SoundManager.Instance.SFXPlay(soundClip.Clips[6]);
 
         yield return YieldCache.WaitForSeconds(0.5f);
 
@@ -492,5 +553,10 @@ public class PlayManager : MonoBehaviour
             default: break;
         }
         return null;
+    }
+
+    public void DropSound()
+    {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[4]);
     }
 }

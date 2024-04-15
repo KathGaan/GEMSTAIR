@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e87a9736b5ec48a67b446bb229231, type: 3}
+  m_Name: LevelData_2
+  m_EditorClassIdentifier: 
+  redField:
+  - num: 0
+    color: 0
+  blueField:
+  - num: 0
+    color: 1
+  whiteField:
+  - num: 0
+    color: 2
+  playerCards:
+  - num: 1
+    color: 0
+  - num: 2
+    color: 1
+  cpu1Cards:
+  - num: 10
+    color: 2
+  cpu2Cards:
+  - num: 2
+    color: 0
+  - num: 10
+    color: 1
+  cpu3Cards:
+  - num: 2
+    color: 1
+  - num: 10
+    color: 0
+  taroCardNum: 2

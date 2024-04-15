@@ -195,7 +195,7 @@ public class TaroFunction
     {
         GameManager.Instance.PlayManager.SkipTurn();
 
-        for(int i = GameManager.Instance.PlayManager.TaroHand.childCount; i < 3;i++)
+        for(int i = GameManager.Instance.PlayManager.TaroHand.childCount; i < 2;i++)
         {
             GameManager.Instance.PlayManager.AddTaro();
         }
@@ -203,10 +203,14 @@ public class TaroFunction
 
     public void Taro15()
     {
+        SoundManager.Instance.MuteSFX = true;
+
         for(int i = 0; i < 3; i++)
         {
             GameManager.Instance.PlayManager.ChangeCpuHand(i);
         }
+
+        SoundManager.Instance.MuteSFX = false;
     }
 
     public void Taro16()
@@ -281,11 +285,8 @@ public class TaroFunction
 
     public void Taro21()
     {
-        for(int i = 0; i < 3; i ++)
-        {
-            GameManager.Instance.PlayManager.CpuSkip[i] = true;
-        }
+        GameManager.Instance.PlayManager.SkipTurn();
 
-        GameManager.Instance.PlayManager.SkipPlayer = 2;
+        GameManager.Instance.PlayManager.SkipCpuAfter = 2;
     }
 }

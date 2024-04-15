@@ -8,6 +8,8 @@ public class WhiteField : DropPlace
     {
         if (GameManager.dragObject.GetComponent<DragObject>().Info.num == 15)
         {
+            GameManager.Instance.UsedTaro = true;
+
             if (GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.None || GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.White)
             {
                 GameManager.Instance.PlayManager.GetTaro(GameManager.dragObject.GetComponent<DragObject>().Info, CardColor.White);

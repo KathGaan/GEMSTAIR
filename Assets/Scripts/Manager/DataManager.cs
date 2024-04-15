@@ -57,6 +57,14 @@ public class DataManager : SingletonManager<DataManager>
         Data.BGMVolume = 1f;
         Data.Language = "Korean";
     }
+
+    public void SaveClearData(int num)
+    {
+        if(Data.ClearData.Count <= num)
+        {
+            Data.ClearData.Add(true);
+        }
+    }
 }
 
 [Serializable]
@@ -67,4 +75,6 @@ public class Data
     public float BGMVolume;
 
     public string Language;
+
+    public List<bool> ClearData = new List<bool>();
 }

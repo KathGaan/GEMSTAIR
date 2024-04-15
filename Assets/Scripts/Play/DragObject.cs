@@ -17,6 +17,8 @@ public class DragObject : MonoBehaviour , IDragHandler , IEndDragHandler, IBegin
         get { return info; }
     }
 
+    [SerializeField] SoundClip soundClip;
+
     //Start
     private void Start()
     {
@@ -39,6 +41,8 @@ public class DragObject : MonoBehaviour , IDragHandler , IEndDragHandler, IBegin
         GameManager.dragObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         GameManager.dragObject.transform.SetParent(dragNow);
+
+        SoundManager.Instance.SFXPlay(soundClip.Clips[0]);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -52,9 +56,15 @@ public class DragObject : MonoBehaviour , IDragHandler , IEndDragHandler, IBegin
 
         GameManager.dragObject = null;
 
-        if (transform.parent == dragNow)
+        if (transform.parent == dragNow && !GameManager.Instance.UsedTaro)
         {
             transform.SetParent(playerHand);
+
+            SoundManager.Instance.SFXPlay(soundClip.Clips[1]);
+        }
+        else
+        {
+            GameManager.Instance.UsedTaro = false;
         }
     }
 }

@@ -24,8 +24,20 @@ public class SoundManager : MonoSingletonManager<SoundManager>
 
     [SerializeField] AudioMixer masterAudio;
 
+    private bool muteSFX;
+
+    public bool MuteSFX
+    {
+        set { muteSFX = value; }
+    }
+
     public void SFXPlay(AudioClip clip)
     {
+        if(muteSFX)
+        {
+            return;
+        }
+
         sfxAudio.PlayOneShot(clip);
     }
 

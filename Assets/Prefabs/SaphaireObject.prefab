@@ -93,6 +93,10 @@ MonoBehaviour:
   info:
     num: 3
     color: 1
+  soundClip:
+    clips:
+    - {fileID: 8300000, guid: 748036e101974b14a92fb81d1cd9516a, type: 3}
+    - {fileID: 8300000, guid: 1d02e2b8a62130349a7098500ad6b685, type: 3}
 --- !u!225 &-5530093523489808586
 CanvasGroup:
   m_ObjectHideFlags: 0

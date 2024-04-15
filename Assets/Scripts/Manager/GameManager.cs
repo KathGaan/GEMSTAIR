@@ -31,6 +31,14 @@ public class GameManager : MonoSingletonManager<GameManager>
 
     static public GameObject dragObject;
 
+    private bool usedTaro;
+
+    public bool UsedTaro
+    {
+        set { usedTaro = value; }
+        get { return usedTaro; }
+    }
+
     //PlayBefore
     public void LoadSelectedLevelData()
     {

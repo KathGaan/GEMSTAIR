@@ -8,17 +8,29 @@ public class LevelSelectManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI levelName;
     [SerializeField] TextMeshProUGUI levelInfo;
-    [SerializeField] List<GameObject> levels;
+    private List<GameObject> levels = new List<GameObject>();
 
     [SerializeField] TextMeshProUGUI buttonText;
 
     private void Start()
     {
+        GetLevelData();
+
         NumSetting();
 
         TextSet();
 
         OptionManager.Instance.changeLanguage += TextSet;
+
+        ButtonSet();
+    }
+
+    private void GetLevelData()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            levels.Add(transform.GetChild(i).gameObject);
+        }
     }
 
     //NumSetting
@@ -48,11 +60,22 @@ public class LevelSelectManager : MonoBehaviour
 
         if (GameManager.Instance.selectedLevel == 0)
         {
-            StartCoroutine(AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.Play));
+            StartCoroutine(AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.PlayTutorial));
         }
         else
         {
             StartCoroutine(AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.Play));
+        }
+    }
+
+    private void ButtonSet()
+    {
+        for(int i = 0; i < DataManager.Instance.Data.ClearData.Count + 1; i++)
+        {
+            if (levels.Count > i)
+            {
+                levels[i].GetComponent<Button>().interactable = true;
+            }
         }
     }
 

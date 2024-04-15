@@ -8,6 +8,8 @@ public class RedField : DropPlace
     {
         if (GameManager.dragObject.GetComponent<DragObject>().Info.num == 15)
         {
+            GameManager.Instance.UsedTaro = true;
+
             if (GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.None || GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.Red)
             {
                 GameManager.Instance.PlayManager.GetTaro(GameManager.dragObject.GetComponent<DragObject>().Info, CardColor.Red);

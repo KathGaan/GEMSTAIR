@@ -12,6 +12,8 @@ public abstract class DropPlace :MonoBehaviour, IDropHandler
 
         GameManager.dragObject.transform.SetParent(transform);
 
+        GameManager.Instance.PlayManager.DropSound();
+
         AddListData();
 
         StartCoroutine(GameManager.Instance.PlayManager.CpuTurnStart());

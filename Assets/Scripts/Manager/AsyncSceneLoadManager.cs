@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,7 +65,9 @@ public class AsyncSceneLoadManager : MonoSingletonManager<AsyncSceneLoadManager>
 
 
     private void StartSceneLoad()
-    {   
+    {
+        InputManager.Instance.keyDownAction -= OptionManager.Instance.OptionKeyDown;
+
         sceneLoadUI.SetActive(true);
         SoundManager.Instance.StopBGM();
     }
@@ -92,6 +95,8 @@ public class AsyncSceneLoadManager : MonoSingletonManager<AsyncSceneLoadManager>
         }
 
         sceneLoadUI.SetActive(false);
+
+        InputManager.Instance.keyDownAction += OptionManager.Instance.OptionKeyDown;
     }
 
     private void Start()

@@ -79,7 +79,19 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         optionUI.SetActive(false);
     }
 
+    public void Retry()
+    {
+        SoundManager.Instance.ButtonSound();
+
+        GameManager.Instance.LoadSelectedLevelData();
+
+        StartCoroutine(AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.Play));
+
+        optionUI.SetActive(false);
+    }
+
     [SerializeField] GameObject goMainButton;
+    [SerializeField] GameObject retryButton;
 
     public void OpenOption()
     {
@@ -96,6 +108,15 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         else if (!goMainButton.activeSelf)
         {
             goMainButton.SetActive(true);
+        }
+
+        if(SceneManager.GetActiveScene().name == SceneName.Play.ToString())
+        {
+            retryButton.SetActive(true);
+        }
+        else
+        {
+            retryButton.SetActive(false);
         }
     }
 
