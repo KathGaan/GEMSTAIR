@@ -63,12 +63,17 @@ public class Card
     public int num;
     public CardColor color;
 
+    public bool ab;
+    public int abNum;
+
     public Card() { }
 
     public Card(Card other)
     {
         this.color = other.color;
         this.num = other.num;
+        this.ab = other.ab;
+        this.abNum = other.abNum;
     }
 }
 

@@ -8,6 +8,10 @@ public class TaroMain : MonoBehaviour
 {
     [SerializeField] GameObject selectUI;
 
+    [SerializeField] TextMeshProUGUI howMany;
+
+    private int howManyTaros;
+
     [SerializeField] Button startButton;
 
     [SerializeField] List<Image> taroCards;
@@ -35,19 +39,30 @@ public class TaroMain : MonoBehaviour
     {
         startButton.interactable = false;
 
+        howManyTaros = GameManager.Instance.CurrentLevelData.TaroCardNum;
+
+        howManyText();
+
         TextSet();
 
         OptionManager.Instance.changeLanguage += TextSet;
+        OptionManager.Instance.changeLanguage += howManyText;
     }
 
     private void OnDisable()
     {
         OptionManager.Instance.changeLanguage -= TextSet;
+        OptionManager.Instance.changeLanguage -= howManyText;
     }
 
     private void TextSet()
     {
         startButton.GetComponentInChildren<TextMeshProUGUI>().text = TextManager.Instance.LoadString("OneButtonTexts", 1);
+    }
+
+    private void howManyText()
+    {
+        howMany.text = TextManager.Instance.LoadString("OneButtonTexts", 2) + howManyTaros;
     }
 
     //TaroSelect
@@ -60,6 +75,8 @@ public class TaroMain : MonoBehaviour
                 selectedTaroCards.RemoveAt(i);
                 taroCards[num].color = disVisualCard;
                 startButton.interactable = false;
+                howManyTaros++;
+                howManyText();
                 return;
             }
         }
@@ -71,6 +88,8 @@ public class TaroMain : MonoBehaviour
 
         selectedTaroCards.Add(num);
         taroCards[num].color = visualCard;
+        howManyTaros--;
+        howManyText();
 
         if (selectedTaroCards.Count >= GameManager.Instance.CurrentLevelData.TaroCardNum)
         {

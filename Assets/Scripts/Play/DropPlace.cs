@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,6 +13,8 @@ public abstract class DropPlace :MonoBehaviour, IDropHandler
 
         GameManager.dragObject.transform.SetParent(transform);
 
+        transform.GetComponent<GridField>().GetChilds();
+
         GameManager.Instance.PlayManager.DropSound();
 
         AddListData();
@@ -19,7 +22,41 @@ public abstract class DropPlace :MonoBehaviour, IDropHandler
         StartCoroutine(GameManager.Instance.PlayManager.CpuTurnStart());
     }
 
+    private void TaskAb()
+    {
+        if (GameManager.dragObject.GetComponent<DragObject>().Info.ab == true)
+        {
+            GameManager.Instance.PlayManager.TaroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.PlayerUse, GameManager.dragObject.GetComponent<DragObject>());
+        }
+    }
+
     protected abstract bool Task();
 
-    protected abstract void AddListData();
+    private void AddListData()
+    {
+        GameManager.Instance.PlayManager.GetColorParent(GameManager.dragObject.GetComponent<DragObject>().Info.color).Add(GameManager.dragObject.GetComponent<DragObject>().Info);
+        for (int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
+        {
+            if (GameManager.Instance.CurrentLevelData.PlayerCards[i].color == GameManager.dragObject.GetComponent<DragObject>().Info.color)
+                if (GameManager.Instance.CurrentLevelData.PlayerCards[i].num == GameManager.dragObject.GetComponent<DragObject>().Info.num)
+                {
+                    if ((GameManager.Instance.CurrentLevelData.PlayerCards[i].ab == GameManager.dragObject.GetComponent<DragObject>().Info.ab) == true)
+                    {
+                        if (GameManager.Instance.CurrentLevelData.PlayerCards[i].abNum == GameManager.dragObject.GetComponent<DragObject>().Info.abNum)
+                        {
+                            TaskAb();
+                            GameManager.Instance.CurrentLevelData.PlayerCards.RemoveAt(i);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        GameManager.Instance.CurrentLevelData.PlayerCards.RemoveAt(i);
+                        break;
+                    }
+                }
+        }
+        GameManager.dragObject.GetComponent<DragObject>().enabled = false;
+        GameManager.dragObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
 }

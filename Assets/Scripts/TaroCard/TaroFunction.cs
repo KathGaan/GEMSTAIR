@@ -51,42 +51,32 @@ public class TaroFunction
     {
         GameManager.Instance.PlayManager.DestroyHands();
 
-        List<CardColor> colors = new List<CardColor>();
-
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
         {
-            colors.Add((CardColor)i);
+            if (--GameManager.Instance.CurrentLevelData.PlayerCards[i].num < 0)
+            {
+                GameManager.Instance.CurrentLevelData.PlayerCards.RemoveAt(i--);
+            }
+            else
+            {
+                GameManager.Instance.PlayManager.GenerateGem(GameManager.Instance.CurrentLevelData.PlayerCards[i]).transform.SetParent(GameManager.Instance.PlayManager.PlayerHand);
+            }
         }
 
-        switch (GameManager.Instance.PlayManager.TaroColor)
+        if (GameManager.Instance.CurrentLevelData.PlayerCards.Count == 0)
         {
-            case CardColor.Red:
-                colors.RemoveAt(0);
-                break;
-            case CardColor.Blue:
-                colors.RemoveAt(1);
-                break;
-            case CardColor.White:
-                colors.RemoveAt(2);
-                break;
+            GameManager.Instance.PlayManager.LevelClear();
         }
-
-        for(int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
-        {
-            GameManager.Instance.CurrentLevelData.PlayerCards[i].color = colors[UnityEngine.Random.Range(0,2)];
-            GameManager.Instance.PlayManager.GenerateGem(GameManager.Instance.CurrentLevelData.PlayerCards[i]).transform.SetParent(GameManager.Instance.PlayManager.PlayerHand);
-        }
-        
     }
 
     public void Taro2()
     {
         Card newCard = new Card();
 
-        newCard.color = CardColor.Red;
-        newCard.num = 11;
+        newCard.color = GameManager.Instance.PlayManager.TaroColor;
+        newCard.num = 1;
 
-        GameManager.Instance.CurrentLevelData.RedField.Add(newCard);
+        GameManager.Instance.PlayManager.GetColorParent(newCard.color).Add(newCard);
 
         GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetParentTransform(newCard.color));
     }
@@ -95,10 +85,10 @@ public class TaroFunction
     {
         Card newCard = new Card();
 
-        newCard.color = CardColor.Blue;
-        newCard.num = 11;
+        newCard.color = GameManager.Instance.PlayManager.TaroColor;
+        newCard.num = 6;
 
-        GameManager.Instance.CurrentLevelData.BlueField.Add(newCard);
+        GameManager.Instance.PlayManager.GetColorParent(newCard.color).Add(newCard);
 
         GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetParentTransform(newCard.color));
     }
@@ -107,27 +97,54 @@ public class TaroFunction
     {
         Card newCard = new Card();
 
-        newCard.color = CardColor.White;
+        newCard.color = GameManager.Instance.PlayManager.TaroColor;
         newCard.num = 11;
 
-        GameManager.Instance.CurrentLevelData.WhiteField.Add(newCard);
+        GameManager.Instance.PlayManager.GetColorParent(newCard.color).Add(newCard);
 
         GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetParentTransform(newCard.color));
     }
 
     public void Taro5()
     {
-        GameManager.Instance.PlayManager.CpuSkip[0] = true;
+        if (GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).childCount > 0)
+        {
+            GameManager.Instance.PlayManager.GetColorParent(GameManager.Instance.PlayManager.TaroColor).Add(GameManager.Instance.PlayManager.GetColorParent(GameManager.Instance.PlayManager.TaroColor)[0]);
+            GameManager.Instance.PlayManager.GetColorParent(GameManager.Instance.PlayManager.TaroColor).RemoveAt(0);
+            GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).GetChild(0).SetAsLastSibling();
+            if(GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).GetChild(0).GetComponent<DragObject>().Info.ab)
+            {
+                GameManager.Instance.PlayManager.TaroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.Changed, GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).GetChild(0).GetComponent<DragObject>());
+            }
+        }
+
+        CardColor j = GameManager.Instance.CurrentLevelData.PlayerCards[0].color;
+
+        GameManager.Instance.PlayManager.Return5 += 1;
+
+        for (int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
+        { 
+            if(j != GameManager.Instance.CurrentLevelData.PlayerCards[i].color)
+            {
+                GameManager.Instance.PlayManager.Return5 = 0;
+                break;
+            }
+        }
     }
 
     public void Taro6()
     {
-        GameManager.Instance.PlayManager.CpuSkip[1] = true;
+        if (GameManager.Instance.CurrentLevelData.PlayerCards.Count == 1)
+        {
+            GameManager.Instance.PlayManager.DestroyHands();
+            GameManager.Instance.CurrentLevelData.PlayerCards[0].num = 12;
+            GameManager.Instance.PlayManager.GenerateGem(GameManager.Instance.CurrentLevelData.PlayerCards[0]).transform.SetParent(GameManager.Instance.PlayManager.PlayerHand);
+        }
     }
 
     public void Taro7()
     {
-        GameManager.Instance.PlayManager.CpuSkip[2] = true;
+        GameManager.Instance.PlayManager.CpuSkip[(int)GameManager.Instance.PlayManager.TaroColor] = true;
     }
 
     public void Taro8()
@@ -151,14 +168,17 @@ public class TaroFunction
 
     public void Taro10()
     {
-        Card newCard = new Card();
+        for (int i = 0; i < 3; i++)
+        {
+            Card newCard = new Card();
 
-        newCard.color = GameManager.Instance.PlayManager.TaroColor;
-        newCard.num = UnityEngine.Random.Range(0,11);
+            newCard.color = (CardColor)i;
+            newCard.num = UnityEngine.Random.Range(0, 11);
 
-        GameManager.Instance.PlayManager.GetColorParent(GameManager.Instance.PlayManager.TaroColor).Add(newCard);
+            GameManager.Instance.PlayManager.GetColorParent(newCard.color).Add(newCard);
 
-        GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetParentTransform(newCard.color));
+            GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetParentTransform(newCard.color));
+        }
     }
 
     public void Taro11()
@@ -189,6 +209,8 @@ public class TaroFunction
         GameManager.Instance.PlayManager.GetCpuParent(GameManager.Instance.PlayManager.TaroColor).Add(newCard);
 
         GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetCpuTransform(newCard.color));
+
+        GameManager.Instance.PlayManager.GetCpuTransform(newCard.color).GetComponent<GridField>().GetChilds();
     }
 
     public void Taro14()
@@ -203,14 +225,10 @@ public class TaroFunction
 
     public void Taro15()
     {
-        SoundManager.Instance.MuteSFX = true;
-
         for(int i = 0; i < 3; i++)
         {
-            GameManager.Instance.PlayManager.ChangeCpuHand(i);
+            GameManager.Instance.PlayManager.ChangeCpuHand(i , false);
         }
-
-        SoundManager.Instance.MuteSFX = false;
     }
 
     public void Taro16()
@@ -224,14 +242,10 @@ public class TaroFunction
 
         GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetParentTransform(newCard.color));
 
-        for(int i = 0; i < 3; i++)
-        {
-            if((CardColor)i != GameManager.Instance.PlayManager.TaroColor)
-            {
-                GameManager.Instance.PlayManager.GetColorParent((CardColor)i).Clear();
-                GameManager.Instance.PlayManager.DestroyGems((CardColor)i);
-            }
-        }
+        int i = UnityEngine.Random.Range(0, 3);
+
+        GameManager.Instance.PlayManager.GetColorParent((CardColor)i).Clear();
+        GameManager.Instance.PlayManager.DestroyGems((CardColor)i);
 
     }
 
@@ -279,7 +293,7 @@ public class TaroFunction
 
         if (UnityEngine.Random.Range(0, 4) != 2)
         {
-            GameManager.Instance.PlayManager.Return20 = true;
+            GameManager.Instance.PlayManager.Return20 += 1;
         }
     }
 

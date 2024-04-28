@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3560255890401456328
 CanvasRenderer:
@@ -93,6 +93,8 @@ MonoBehaviour:
   info:
     num: 3
     color: 1
+    ab: 0
+    abNum: 0
   soundClip:
     clips:
     - {fileID: 8300000, guid: 748036e101974b14a92fb81d1cd9516a, type: 3}

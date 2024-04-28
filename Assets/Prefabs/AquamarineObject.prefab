@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4038012012023767896
 CanvasRenderer:
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info:
-    num: 4
+    num: 2
     color: 2
   soundClip:
     clips:
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
   m_sharedMaterial: {fileID: 2720364492470797027, guid: aa10abe45b78239459b837bebe5386ad, type: 2}
@@ -183,8 +183,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292078684
-  m_fontColor: {r: 0.36196154, g: 0.9245283, b: 0.827161, a: 1}
+    rgba: 4289581312
+  m_fontColor: {r: 0, g: 0.8207547, b: 0.67826253, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

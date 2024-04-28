@@ -8,10 +8,9 @@ public class RedField : DropPlace
     {
         if (GameManager.dragObject.GetComponent<DragObject>().Info.num == 15)
         {
-            GameManager.Instance.UsedTaro = true;
-
             if (GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.None || GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.Red)
             {
+                GameManager.Instance.UsedTaro = true;
                 GameManager.Instance.PlayManager.GetTaro(GameManager.dragObject.GetComponent<DragObject>().Info, CardColor.Red);
                 return false;
             }
@@ -26,19 +25,4 @@ public class RedField : DropPlace
 
         return true;
     }
-    protected override void AddListData()
-    {
-        GameManager.Instance.CurrentLevelData.RedField.Add(GameManager.dragObject.GetComponent<DragObject>().Info);
-        for (int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
-        {
-            if (GameManager.Instance.CurrentLevelData.PlayerCards[i].color == GameManager.dragObject.GetComponent<DragObject>().Info.color)
-                if (GameManager.Instance.CurrentLevelData.PlayerCards[i].num == GameManager.dragObject.GetComponent<DragObject>().Info.num)
-                {
-                    GameManager.Instance.CurrentLevelData.PlayerCards.RemoveAt(i);
-                    break;
-                }
-        }
-        GameManager.dragObject.GetComponent<DragObject>().enabled = false;
-    }
-
 }

@@ -16,7 +16,7 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] Transform playerHand;
 
-    [SerializeField] GameObject blockCase11;
+    [SerializeField] GameObject blockCase21;
 
     [SerializeField] GameObject blockTaro;
 
@@ -24,8 +24,10 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] GameObject destroyTut;
 
-    private bool case9;
-    private bool case11;
+    [SerializeField] Button viewBT;
+
+    private bool case18;
+    private bool case21;
 
     //Start
 
@@ -44,16 +46,16 @@ public class TutorialManager : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.Instance.CurrentLevelData.PlayerCards.Count == 2 && !case9)
+        if(GameManager.Instance.CurrentLevelData.PlayerCards.Count == 2 && !case18)
         {
-            StartCoroutine(WaitTime(6f));
-            case9 = true;
+            StartCoroutine(WaitTime(4.5f));
+            case18 = true;
         }
 
-        if (redField.childCount == 0 && !case11)
+        if (redField.childCount == 0 && !case21)
         {
-            NextTutorial();
-            case11 = true;
+            StartCoroutine(WaitTime(0.5f));
+            case21 = true;
         }
     }
 
@@ -82,55 +84,105 @@ public class TutorialManager : MonoBehaviour
     {
         switch (tutorialIndex)
         {
-            case 4:
-                fade.SetActive(false);
-                tutorialText.text = "";
-                Case4Effect();
-                break;
-            case 5:
-                fade.SetActive(true);
+            case 2:
+                viewClone.SetActive(true);
                 TextSetting();
                 break;
+
+            case 3:
+                viewBT.onClick.AddListener(NextTutorial);
+                viewClone.SetActive(false);
+                TaroDisable();
+                fade.SetActive(false);
+                break;
+            case 4:
+                fade.SetActive(true);
+                gem.SetActive(true);
+                TextSetting();
+                break;
+            case 5:
+                gem.SetActive(false);
+                playerView.SetActive(true);
+                TextSetting();
+                break;
+            case 6:
+                playerView.SetActive(false);
+                cpuView.SetActive(true);
+                TextSetting();
+                break;
+            case 7:
+                cpuView.SetActive(false);
+                useView.SetActive(true);
+                TextSetting();
+                break;
+            case 8:
+                useView.SetActive(false);
+                TextSetting();
+                break;
+
             case 9:
                 fade.SetActive(false);
-                tutorialText.text = "";
-                Case9Effect();
                 break;
             case 10:
+                viewBT.onClick.RemoveListener(NextTutorial);
                 fade.SetActive(true);
                 TextSetting();
                 break;
             case 11:
+                TaroDisable();
+                taros.GetChild(0).GetComponent<Button>().interactable = true;
                 fade.SetActive(false);
-                tutorialText.text = "";
-                blockCase11.SetActive(true);
-                blockTaro.SetActive(false);
                 break;
             case 12:
                 fade.SetActive(true);
-                blockCase11.SetActive(false);
                 TextSetting();
                 break;
-            case 13:
-                Case13Effect();
+            case 18:
+                fade.SetActive(false);
+                Case18Effect();
+                break;
+            case 19:
+                fade.SetActive(true);
+                TextSetting();
+                break;
+
+            case 21:
+                blockTaro.SetActive(false);
+                fade.SetActive(false);
+                blockCase21.SetActive(true);
+                break;
+            case 22:
+                fade.SetActive(true);
+                blockCase21.SetActive(false);
+                Case21Effect();
+                TextSetting();
+                break;
+            case 23:
                 Destroy(destroyTut);
                 break;
+
 
             default: TextSetting(); break;
         }
     }
 
-    private void Case4Effect()
+    [SerializeField] GameObject viewClone;
+
+    [SerializeField] GameObject gem;
+
+    [SerializeField] GameObject playerView;
+    [SerializeField] GameObject cpuView;
+    [SerializeField] GameObject useView;
+
+    private void TaroDisable()
     {
         for(int i = 0; i < taros.childCount; i++)
         {
             taros.GetChild(i).GetComponent<Button>().interactable = false;
         }
-
-        taros.GetChild(0).GetComponent<Button>().interactable = true;
     }
 
-    private void Case9Effect()
+    private void Case18Effect()
     {
         for(int i =0; i < playerHand.childCount; i++)
         {
@@ -142,7 +194,7 @@ public class TutorialManager : MonoBehaviour
         blockTaro.SetActive(true);
     }
 
-    private void Case13Effect()
+    private void Case21Effect()
     {
         for (int i = 0; i < playerHand.childCount; i++)
         {

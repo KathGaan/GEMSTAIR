@@ -50,4 +50,22 @@ public class MainMenuManager : MonoBehaviour
     {
         OptionManager.Instance.changeLanguage -= SetMainText;
     }
+
+    //Credit
+
+    [SerializeField] GameObject credit;
+
+    public void OpenCredit()
+    {
+        SoundManager.Instance.ButtonSound();
+
+        if (credit.activeSelf)
+        {
+            credit.SetActive(false);
+        }
+        else
+        {
+            credit.SetActive(true);
+        }
+    }
 }

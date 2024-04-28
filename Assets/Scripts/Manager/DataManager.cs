@@ -76,5 +76,6 @@ public class Data
 
     public string Language;
 
+
     public List<bool> ClearData = new List<bool>();
 }

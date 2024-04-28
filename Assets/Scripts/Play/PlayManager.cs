@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,7 @@ public class PlayManager : MonoBehaviour
     [SerializeField] List<GameObject> prefabs;
 
     [SerializeField] GameObject taroPrefab;
+
     [SerializeField] Transform taroHand;
 
     public Transform TaroHand
@@ -76,12 +79,20 @@ public class PlayManager : MonoBehaviour
         set { colorSkip = value; }
     }
 
-    private bool return20;
+    private int return20;
 
-    public bool Return20
+    public int Return20
     {
         set { return20 = value; }
         get { return return20; }
+    }
+
+    private int return5;
+
+    public int Return5
+    {
+        set { return5 = value; }
+        get { return return5; }
     }
 
     private int skipCpuAfter;
@@ -99,7 +110,40 @@ public class PlayManager : MonoBehaviour
         get { return popUpText; }
     }
 
+    private bool StopAll;
+
     [SerializeField] SoundClip soundClip;
+
+    private int cpuX;
+
+    public int CpuX
+    {
+        set { cpuX = value; }
+        get { return cpuX; }
+    }
+
+    private bool taroGem9;
+
+    public bool TaroGem9
+    {
+        get { return taroGem9; }
+        set { taroGem9 = value; }
+    }
+
+    private TaroGemFunction taroGemFunction;
+
+    public TaroGemFunction TaroGemFunction
+    {
+        get { return taroGemFunction; }
+    }
+
+    private bool skipPlayerTurn;
+
+    public bool SkipPlayerTurn
+    {
+        get { return skipPlayerTurn; }
+        set { skipPlayerTurn = value; }
+    }
 
     //Start
     private void Start()
@@ -108,21 +152,57 @@ public class PlayManager : MonoBehaviour
 
         taroFunction = new TaroFunction();
 
+        taroGemFunction = new TaroGemFunction();
+
         StartSetting();
+
+        TrunOffPlayerHand();
     }
 
     private void StartSetting()
     {
+        GameObject newObj = null;
+
         List<List<Card>> getSetting = GameManager.Instance.CurrentLevelData.GetSetting();
 
         for(int i = 0; i < settingTransforms.Count; i++)
         {
             for (int j = 0; j < getSetting[i].Count; j++)
             {
-                prefabs[(int)getSetting[i][j].color].GetComponent<DragObject>().Info = getSetting[i][j];
-                prefabs[(int)getSetting[i][j].color].GetComponentInChildren<TextMeshProUGUI>().text = "" + getSetting[i][j].num;
-                Instantiate(prefabs[(int)getSetting[i][j].color], settingTransforms[i]);
+                if (getSetting[i][j].ab == true)
+                {
+                    prefabs[(int)getSetting[i][j].color + 3].GetComponent<GemInfo>().GemAbNum = getSetting[i][j].abNum;
+
+                    newObj = Instantiate(prefabs[(int)getSetting[i][j].color + 3], settingTransforms[i]);
+
+                    newObj.GetComponent<DragObject>().Info.num = getSetting[i][j].num;
+                    newObj.GetComponent<DragObject>().Info.abNum = getSetting[i][j].abNum;
+                    newObj.GetComponentInChildren<TextMeshProUGUI>().text = "" + getSetting[i][j].num;
+                }
+                else
+                {
+                    newObj = Instantiate(prefabs[(int)getSetting[i][j].color], settingTransforms[i]);
+
+                    newObj.GetComponent<DragObject>().Info.num = getSetting[i][j].num;
+                    newObj.GetComponentInChildren<TextMeshProUGUI>().text = "" + getSetting[i][j].num;
+                }
             }
+        }
+    }
+
+    private void TrunOffPlayerHand()
+    {
+        for (int i = 0; i < playerHand.childCount; i++)
+        {
+            playerHand.GetChild(i).GetComponent<DragObject>().enabled = false;
+        }
+    }
+
+    private void TrunOnPlayerHand()
+    {
+        for (int i = 0; i < playerHand.childCount; i++)
+        {
+            playerHand.GetChild(i).GetComponent<DragObject>().enabled = true;
         }
     }
 
@@ -136,7 +216,12 @@ public class PlayManager : MonoBehaviour
 
         }
 
+        taroHand.GetComponent<GridField>().GetChilds();
+
         waitImage.gameObject.SetActive(true);
+
+        TrunOnPlayerHand();
+
         StartCoroutine(PlayerTurnStart());
     }
 
@@ -144,10 +229,22 @@ public class PlayManager : MonoBehaviour
 
     public IEnumerator PlayerTurnStart()
     {
-        if(return20 == true)
+        if (return20 > 0)
         {
-            AddTaro(20);
-            return20 = false;
+            for(int i = 0; i < return20; i++)
+            {
+                AddTaro(20);
+            }
+            return20 = 0;
+        }
+
+        if (return5 > 0)
+        {
+            for (int i = 0; i < return5; i++)
+            {
+                AddTaro(5);
+            }
+            return5 = 0;
         }
 
         waitIAnim.SetTrigger("PlayerTurn");
@@ -157,6 +254,12 @@ public class PlayManager : MonoBehaviour
         yield return YieldCache.WaitForSeconds(1.5f);
 
         waitImage.gameObject.SetActive(false);
+
+        if(skipPlayerTurn)
+        {
+            SkipTurn();
+            skipPlayerTurn = false;
+        }
     }
 
     public void SkipTurn()
@@ -164,7 +267,7 @@ public class PlayManager : MonoBehaviour
         StartCoroutine(CpuTurnStart());
     }
 
-    private void LevelClear()
+    public void LevelClear()
     {
         popUpText = "Clear!";
 
@@ -179,25 +282,27 @@ public class PlayManager : MonoBehaviour
 
     public IEnumerator CpuTurnStart()
     {
+        if(StopAll)
+        {
+            yield break;
+        }
+
+        playerHand.GetComponent<GridField>().GetChilds();
+
         if(GameManager.Instance.CurrentLevelData.PlayerCards.Count == 0)
         {
             LevelClear();
             yield break;
         }
 
-        if(skipCpuAfter > 0)
-        {
-            skipCpuAfter--;
-            if(skipCpuAfter <= 0)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    CpuSkip[i] = true;
-                }
-            }
-        }
-
         GameManager.dragObject = null;
+
+        if(taroGem9)
+        {
+            taroGem9 = false;
+
+            yield break;
+        }
 
         waitImage.gameObject.SetActive(true);
 
@@ -207,58 +312,60 @@ public class PlayManager : MonoBehaviour
 
         yield return YieldCache.WaitForSeconds(1.5f);
 
+        if (skipCpuAfter > 0)
+        {
+            skipCpuAfter--;
+            if (skipCpuAfter <= 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    CpuSkip[i] = true;
+                }
+            }
+        }
+
         StartCoroutine(CpuTurnAction());
     }
 
     private IEnumerator CpuTurnAction()
     {
-        List<Card> dummy = null;
+        DragObject dummy = null;
 
-        for(int i = 0; i < 3; i++)
+        for(cpuX = 0; cpuX < 3; cpuX++)
         {
-            switch (i)
+            if(StopAll)
             {
-                case 0: 
-                    dummy = GameManager.Instance.CurrentLevelData.Cpu1Cards;
-                    break;
-                case 1:
-                    dummy = GameManager.Instance.CurrentLevelData.Cpu2Cards;
-                    break;
-                case 2:
-                    dummy = GameManager.Instance.CurrentLevelData.Cpu3Cards;
-                    break;
+                yield break;
             }
 
-            for(int j = 0; j < dummy.Count; j++)
+
+            for(int j = 0; j < settingTransforms[4 + cpuX].childCount; j++)
             {
-                if (cpuSkip[i])
+
+                dummy = settingTransforms[4 + cpuX].GetChild(0).GetComponent<DragObject>();
+
+                if (cpuSkip[cpuX])
                 {
-                    cpuSkip[i] = false;
+                    cpuSkip[cpuX] = false;
                     break;
                 }
 
-                if (TaskCpu(dummy[0]))
+                if (TaskCpu(dummy))
                 {
-                    CpuUse(i , dummy[0]);
+                    
+                    CpuUse(cpuX, dummy);
 
 
                     yield return YieldCache.WaitForSeconds(0.5f);
 
-                    if(dummy.Count <= 0)
-                    {
-                        LevelFailed();
-
-                        yield break;
-                    }
-
                     break;
                 }
 
-                yield return YieldCache.WaitForSeconds(0.5f);
+                yield return YieldCache.WaitForSeconds(0.25f);
 
-                ChangeCpuHand(i, dummy);
+                ChangeCpuHand(cpuX, true);
 
-                yield return YieldCache.WaitForSeconds(0.5f);
+                yield return YieldCache.WaitForSeconds(0.25f);
 
             }
         }
@@ -273,62 +380,57 @@ public class PlayManager : MonoBehaviour
 
     //CpuAction
 
-    private bool TaskCpu(Card card)
+    private bool TaskCpu(DragObject card)
     {
-        if (colorSkip[(int)card.color])
+        if (colorSkip[(int)card.Info.color])
         {
             return false;
         }
 
-        switch (card.color)
+        if( GetColorParent(card.Info.color).Count <= 0)
         {
-            case CardColor.Red:
-                if (GameManager.Instance.CurrentLevelData.RedField.Count <= 0)
-                    return true;
+            return true;
+        }
 
-                if (card.num > GameManager.Instance.CurrentLevelData.RedField[GameManager.Instance.CurrentLevelData.RedField.Count - 1].num)
-                    return true;
-                break;
-            case CardColor.Blue:
-                if (GameManager.Instance.CurrentLevelData.BlueField.Count <= 0)
-                    return true;
-
-                if (card.num > GameManager.Instance.CurrentLevelData.BlueField[GameManager.Instance.CurrentLevelData.BlueField.Count - 1].num)
-                    return true;
-                break;
-            case CardColor.White:
-                if (GameManager.Instance.CurrentLevelData.WhiteField.Count <= 0)
-                    return true;
-
-                if (card.num > GameManager.Instance.CurrentLevelData.WhiteField[GameManager.Instance.CurrentLevelData.WhiteField.Count - 1].num)
-                    return true;
-                break;
+        if(card.Info.num > settingTransforms[(int)card.Info.color].GetChild(settingTransforms[(int)card.Info.color].childCount - 1).GetComponent<DragObject>().Info.num)
+        {
+            return true;
         }
 
         return false;
     }
 
-    private void CpuUse(int i , Card card)
+    private void CpuUse(int i , DragObject card)
     {
         SoundManager.Instance.SFXPlay(soundClip.Clips[4]);
 
-        switch (i)
+
+        settingTransforms[4 + i].GetChild(0).SetParent(settingTransforms[(int)card.Info.color]);
+
+        GetColorParent(card.Info.color).Add(card.Info);
+
+        GetCpuParent((CardColor)i).RemoveAt(0);
+
+        settingTransforms[(int)card.Info.color].GetComponent<GridField>().GetChilds();
+        settingTransforms[(int)card.Info.color].GetComponent<FieldGridField>().SetGemSize();
+        settingTransforms[4 + i].GetComponent<GridField>().GetChilds();
+
+        if (settingTransforms[4 + cpuX].childCount <= 0)
         {
-            case 0:
-                settingTransforms[4 + i].GetChild(0).SetParent(settingTransforms[(int)card.color]);
-                GetColorParent(card.color).Add(GameManager.Instance.CurrentLevelData.Cpu1Cards[0]);
-                GameManager.Instance.CurrentLevelData.Cpu1Cards.RemoveAt(0);
-                break;
-            case 1:
-                settingTransforms[4 + i].GetChild(0).SetParent(settingTransforms[(int)card.color]);
-                GetColorParent(card.color).Add(GameManager.Instance.CurrentLevelData.Cpu2Cards[0]);
-                GameManager.Instance.CurrentLevelData.Cpu2Cards.RemoveAt(0);
-                break;
-            case 2:
-                settingTransforms[4 + i].GetChild(0).SetParent(settingTransforms[(int)card.color]);
-                GetColorParent(card.color).Add(GameManager.Instance.CurrentLevelData.Cpu3Cards[0]);
-                GameManager.Instance.CurrentLevelData.Cpu3Cards.RemoveAt(0);
-                break;
+            LevelFailed();
+
+            return;
+        }
+
+        TaskAb(card);
+
+    }
+
+    private void TaskAb(DragObject card)
+    {
+        if (card.Info.ab == true)
+        {
+            taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.CpuUse, card);
         }
     }
 
@@ -349,33 +451,38 @@ public class PlayManager : MonoBehaviour
         return null;
     }
 
-    private void ChangeCpuHand(int i , List<Card> dummy)
+    public void ChangeCpuHand(int i , bool insertTrue)
     {
-        SoundManager.Instance.SFXPlay(soundClip.Clips[5]);
+        if (insertTrue)
+        {
+            SoundManager.Instance.SFXPlay(soundClip.Clips[5]);
 
-        dummy.Add(dummy[0]);
-        dummy.RemoveAt(0);
-
-        settingTransforms[4 + i].GetChild(0).SetAsLastSibling();
-    }
-
-    public void ChangeCpuHand(int i)
-    {
-        SoundManager.Instance.SFXPlay(soundClip.Clips[5]);
+            if(settingTransforms[4 + i].GetChild(0).GetComponent<DragObject>().Info.ab == true)
+            {
+                taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.CpuTask, settingTransforms[4 + i].GetChild(0).GetComponent<DragObject>());
+            }
+        }
 
         GetCpuParent((CardColor)i).Add(GetCpuParent((CardColor)i)[0]);
         GetCpuParent((CardColor)i).RemoveAt(0);
 
         settingTransforms[4 + i].GetChild(0).SetAsLastSibling();
+
+        settingTransforms[4 + i].GetComponent<GridField>().GetChilds();
     }
 
-    private void LevelFailed()
+    public void LevelFailed()
     {
+        if (clearUI.activeSelf)
+            return;
+
         popUpText = "Failed...";
 
         clearUI.SetActive(true);
 
         SoundManager.Instance.SFXPlay(soundClip.Clips[3]);
+
+        StopAll = true;
     }
 
     //Taro
@@ -402,6 +509,10 @@ public class PlayManager : MonoBehaviour
         taroFunction.taroFunctions[usedTaroObj.GetComponent<TaroInfo>().CardNum]();
         usedTaroObj.SetActive(false);
 
+        PlayerHand.GetComponent<GridField>().GetChilds();
+        TaroHand.GetComponent<GridField>().GetChilds();
+        PlayGetChilds();
+
         yield return YieldCache.WaitForSeconds(0.5f);
 
         Destroy(usedTaroObj);
@@ -409,6 +520,14 @@ public class PlayManager : MonoBehaviour
         usedTaroObj = null;
 
         taroAnim.gameObject.SetActive(false);
+    }
+
+    public void PlayGetChilds()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            settingTransforms[i].GetComponent<GridField>().GetChilds();
+        }
     }
 
     //CanPlace
@@ -454,20 +573,34 @@ public class PlayManager : MonoBehaviour
     //Effect
     public void DestroyGems()
     {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[7]);
+
         int i = settingTransforms[(int)taroColor].childCount;
 
         for (int j = 0; j < i; j++)
         {
+            if(settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.ab)
+            {
+                taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>());
+            }
+
             settingTransforms[(int)taroColor].GetChild(0).SetParent(destroyGem);
         }
     }
 
     public void DestroyGems(CardColor color)
     {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[7]);
+
         int i = settingTransforms[(int)color].childCount;
 
         for (int j = 0; j < i; j++)
         {
+            if (settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>().Info.ab)
+            {
+                taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>());
+            }
+
             settingTransforms[(int)color].GetChild(0).SetParent(destroyGem);
         }
     }
@@ -475,6 +608,13 @@ public class PlayManager : MonoBehaviour
 
     public void DestroyGem(Transform gem)
     {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[7]);
+
+        if (gem.GetComponent<DragObject>().Info.ab)
+        {
+            taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, gem.GetComponent<DragObject>());
+        }
+
         gem.SetParent(destroyGem);
     }
 
@@ -492,19 +632,18 @@ public class PlayManager : MonoBehaviour
     {
         GameObject generate = null;
 
-        switch (gem.color)
+        int i = 0;
+
+        if (gem.ab == true)
         {
-            case CardColor.Red:
-                generate = Instantiate(prefabs[0]);
-                break;
-            case CardColor.Blue:
-                generate = Instantiate(prefabs[1]);
-                break;
-            case CardColor.White:
-                generate = Instantiate(prefabs[2]);
-                break;
+            i = 3;
+            prefabs[(int)gem.color + i].GetComponent<GemInfo>().GemAbNum = gem.abNum;
         }
 
+
+        generate = Instantiate(prefabs[(int)gem.color + i], destroyGem);
+
+        generate.GetComponent<DragObject>().Info.abNum = gem.abNum;
         generate.GetComponent<DragObject>().Info.num = gem.num;
         generate.GetComponentInChildren<TextMeshProUGUI>().text = "" + gem.num;
 
@@ -526,6 +665,7 @@ public class PlayManager : MonoBehaviour
     {
         taroPrefab.GetComponent<TaroInfo>().CardNum = i;
         Instantiate(taroPrefab, taroHand);
+        taroHand.GetComponent<GridField>().GetChilds();
     }
 
     public Transform GetParentTransform(CardColor color)

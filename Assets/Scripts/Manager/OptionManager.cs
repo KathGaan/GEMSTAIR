@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class OptionManager : MonoSingletonManager<OptionManager>
 {
     //Resolution
+
     public void SetResolution(int width)
     {
         SoundManager.Instance.ButtonSound();
@@ -90,8 +91,8 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         optionUI.SetActive(false);
     }
 
-    [SerializeField] GameObject goMainButton;
-    [SerializeField] GameObject retryButton;
+    [SerializeField] Button goMainButton;
+    [SerializeField] Button retryButton;
 
     public void OpenOption()
     {
@@ -103,20 +104,20 @@ public class OptionManager : MonoSingletonManager<OptionManager>
 
         if (SceneManager.GetActiveScene().name == SceneName.MainMenu.ToString())
         {
-            goMainButton.SetActive(false);
+            goMainButton.interactable = false;
         }
-        else if (!goMainButton.activeSelf)
+        else if (!goMainButton.interactable)
         {
-            goMainButton.SetActive(true);
+            goMainButton.interactable = true;
         }
 
         if(SceneManager.GetActiveScene().name == SceneName.Play.ToString())
         {
-            retryButton.SetActive(true);
+            retryButton.interactable = true;
         }
-        else
+        else if(retryButton.interactable)
         {
-            retryButton.SetActive(false);
+            retryButton.interactable = false;
         }
     }
 

@@ -60,6 +60,8 @@ public class DragObject : MonoBehaviour , IDragHandler , IEndDragHandler, IBegin
         {
             transform.SetParent(playerHand);
 
+            playerHand.GetComponent<GridField>().GetChilds();
+
             SoundManager.Instance.SFXPlay(soundClip.Clips[1]);
         }
         else

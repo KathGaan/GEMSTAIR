@@ -18,9 +18,7 @@ MonoBehaviour:
   blueField:
   - num: 0
     color: 1
-  whiteField:
-  - num: 0
-    color: 2
+  whiteField: []
   playerCards:
   - num: 1
     color: 1

@@ -47,7 +47,7 @@ public class LevelSelectManager : MonoBehaviour
     {
         SoundManager.Instance.ButtonSound();
 
-        levelName.text = TextManager.Instance.LoadString("LevelNameText",num);
+        levelName.text = num + ". " + TextManager.Instance.LoadString("LevelNameText",num);
         levelInfo.text = TextManager.Instance.LoadString("LevelInfoText", num);
         GameManager.Instance.selectedLevel = num;
     }
@@ -90,7 +90,7 @@ public class LevelSelectManager : MonoBehaviour
     {
         buttonText.text = TextManager.Instance.LoadString("OneButtonTexts", 0);
 
-        levelName.text = TextManager.Instance.LoadString("LevelNameText", GameManager.Instance.selectedLevel);
+        levelName.text = GameManager.Instance.selectedLevel + ". " + TextManager.Instance.LoadString("LevelNameText", GameManager.Instance.selectedLevel);
         levelInfo.text = TextManager.Instance.LoadString("LevelInfoText", GameManager.Instance.selectedLevel);
     }
 }
