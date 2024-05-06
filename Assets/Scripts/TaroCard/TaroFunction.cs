@@ -145,6 +145,8 @@ public class TaroFunction
     public void Taro7()
     {
         GameManager.Instance.PlayManager.CpuSkip[(int)GameManager.Instance.PlayManager.TaroColor] = true;
+
+        GameManager.Instance.PlayManager.ChangeCpuTaros(GameManager.Instance.PlayManager.TaroColor, 7);
     }
 
     public void Taro8()
@@ -184,17 +186,23 @@ public class TaroFunction
     public void Taro11()
     {
         GameManager.Instance.PlayManager.ColorSkip[(int)GameManager.Instance.PlayManager.TaroColor] = true;
+        GameManager.Instance.PlayManager.ChangeCpuTaros(11);
     }
 
     public void Taro12()
     {
-        for(int i = 0; i < 3; i++)
+        GameManager.Instance.PlayManager.DestroySound();
+
+        for (int i = 0; i < 3; i++)
         {
             if(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount > 0)
             {
                 GameManager.Instance.PlayManager.GetColorParent((CardColor)i).RemoveAt(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount - 1);
-                GameManager.Instance.PlayManager.DestroyGem(
-                GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).GetChild(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount - 1));
+                GameManager.Instance.PlayManager.DestroyGem
+                    (
+                        GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).GetChild(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount - 1)
+                        ,true
+                    );
             }
         }
     }
@@ -242,7 +250,10 @@ public class TaroFunction
 
         GameManager.Instance.PlayManager.GenerateGem(newCard).transform.SetParent(GameManager.Instance.PlayManager.GetParentTransform(newCard.color));
 
-        int i = UnityEngine.Random.Range(0, 3);
+        int i = (int)newCard.color + 1;
+
+        if (i >= 3)
+            i = 0;
 
         GameManager.Instance.PlayManager.GetColorParent((CardColor)i).Clear();
         GameManager.Instance.PlayManager.DestroyGems((CardColor)i);

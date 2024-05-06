@@ -38,9 +38,10 @@ public abstract class DropPlace :MonoBehaviour, IDropHandler
         for (int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
         {
             if (GameManager.Instance.CurrentLevelData.PlayerCards[i].color == GameManager.dragObject.GetComponent<DragObject>().Info.color)
+            {
                 if (GameManager.Instance.CurrentLevelData.PlayerCards[i].num == GameManager.dragObject.GetComponent<DragObject>().Info.num)
                 {
-                    if ((GameManager.Instance.CurrentLevelData.PlayerCards[i].ab == GameManager.dragObject.GetComponent<DragObject>().Info.ab) == true)
+                    if (GameManager.Instance.CurrentLevelData.PlayerCards[i].ab == GameManager.dragObject.GetComponent<DragObject>().Info.ab && GameManager.dragObject.GetComponent<DragObject>().Info.ab == true)
                     {
                         if (GameManager.Instance.CurrentLevelData.PlayerCards[i].abNum == GameManager.dragObject.GetComponent<DragObject>().Info.abNum)
                         {
@@ -55,6 +56,7 @@ public abstract class DropPlace :MonoBehaviour, IDropHandler
                         break;
                     }
                 }
+            }
         }
         GameManager.dragObject.GetComponent<DragObject>().enabled = false;
         GameManager.dragObject.GetComponent<CanvasGroup>().blocksRaycasts = true;

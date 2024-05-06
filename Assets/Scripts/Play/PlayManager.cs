@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -145,6 +144,13 @@ public class PlayManager : MonoBehaviour
         set { skipPlayerTurn = value; }
     }
 
+    [SerializeField] List<Image> cpuTaros;
+
+    [SerializeField] List<Image> fieldTaros;
+
+    private Color invisibleColor = new Color(1, 1, 1, 0);
+    private Color visibleColor = new Color(1, 1, 1, 1);
+
     //Start
     private void Start()
     {
@@ -247,6 +253,17 @@ public class PlayManager : MonoBehaviour
             return5 = 0;
         }
 
+        for(int i = 0; i < cpuTaros.Count; i++)
+        {
+            cpuTaros[i].color = invisibleColor;
+            fieldTaros[i].color = invisibleColor;
+        }
+
+        if (skipCpuAfter == 1)
+        {
+            ChangeCpuTaros(21);
+        }
+
         waitIAnim.SetTrigger("PlayerTurn");
 
         SoundManager.Instance.SFXPlay(soundClip.Clips[0]);
@@ -276,6 +293,8 @@ public class PlayManager : MonoBehaviour
         SoundManager.Instance.SFXPlay(soundClip.Clips[2]);
 
         DataManager.Instance.SaveClearData(GameManager.Instance.selectedLevel);
+
+        AchievementManager.Instance.AchivementTask();
     }
 
     //CpuTurn
@@ -522,6 +541,26 @@ public class PlayManager : MonoBehaviour
         taroAnim.gameObject.SetActive(false);
     }
 
+    public void ChangeCpuTaros(CardColor color , int num)
+    {
+        cpuTaros[(int)color].sprite = ResourcesManager.Instance.Load<Sprite>("TaroImage/" + num);
+        cpuTaros[(int)color].color = visibleColor;
+    }
+
+    public void ChangeCpuTaros(int num)
+    {
+        for(int i = 0; i < cpuTaros.Count; i++)
+        {
+            cpuTaros[i].sprite = ResourcesManager.Instance.Load<Sprite>("TaroImage/" + num);
+            cpuTaros[i].color = visibleColor;
+        }
+
+        if(num == 11)
+        {
+            fieldTaros[(int)taroColor].color = visibleColor;
+        }
+    }
+
     public void PlayGetChilds()
     {
         for (int i = 0; i < 3; i++)
@@ -606,9 +645,10 @@ public class PlayManager : MonoBehaviour
     }
 
 
-    public void DestroyGem(Transform gem)
+    public void DestroyGem(Transform gem , bool soundFalse = false)
     {
-        SoundManager.Instance.SFXPlay(soundClip.Clips[7]);
+        if(!soundFalse)
+            SoundManager.Instance.SFXPlay(soundClip.Clips[7]);
 
         if (gem.GetComponent<DragObject>().Info.ab)
         {
@@ -698,5 +738,10 @@ public class PlayManager : MonoBehaviour
     public void DropSound()
     {
         SoundManager.Instance.SFXPlay(soundClip.Clips[4]);
+    }
+
+    public void DestroySound()
+    {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[7]);
     }
 }

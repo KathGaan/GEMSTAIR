@@ -65,6 +65,14 @@ public class DataManager : SingletonManager<DataManager>
             Data.ClearData.Add(true);
         }
     }
+
+    public void SaveAchievementData(int num)
+    {
+        if (Data.Achievement.Contains(num))
+            return;
+
+        Data.Achievement.Add(num);
+    }
 }
 
 [Serializable]
@@ -78,4 +86,6 @@ public class Data
 
 
     public List<bool> ClearData = new List<bool>();
+
+    public List<int> Achievement = new List<int>();
 }

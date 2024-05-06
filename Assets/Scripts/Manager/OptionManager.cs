@@ -147,6 +147,15 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         volumes[2].value = DataManager.Instance.Data.BGMVolume;
     }
 
+    //Version
+
+    [SerializeField] TextMeshProUGUI version;
+
+    private void SetVersionText()
+    {
+        version.text = Application.version;
+    }
+
     private void Start()
     {
         InputManager.Instance.keyDownAction += OptionKeyDown;
@@ -154,6 +163,8 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         SetLoadData();
 
         OptionTextSetting();
+
+        SetVersionText();
 
         optionUI.SetActive(false);
     }

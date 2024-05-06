@@ -68,4 +68,9 @@ public class MainMenuManager : MonoBehaviour
             credit.SetActive(true);
         }
     }
+
+    public void OpenAchievement()
+    {
+        AchievementManager.Instance.OpenUI();
+    }
 }

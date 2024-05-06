@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326e87a9736b5ec48a67b446bb229231, type: 3}
+  m_Name: LevelData_32
+  m_EditorClassIdentifier: 
+  redField:
+  - num: 0
+    color: 0
+    ab: 1
+    abNum: 0
+  - num: 5
+    color: 0
+    ab: 1
+    abNum: 5
+  blueField:
+  - num: 0
+    color: 1
+    ab: 1
+    abNum: 0
+  - num: 5
+    color: 1
+    ab: 1
+    abNum: 5
+  whiteField:
+  - num: 0
+    color: 2
+    ab: 1
+    abNum: 0
+  - num: 5
+    color: 2
+    ab: 1
+    abNum: 5
+  playerCards:
+  - num: 3
+    color: 0
+    ab: 1
+    abNum: 7
+  - num: 2
+    color: 0
+    ab: 0
+    abNum: 0
+  - num: 6
+    color: 2
+    ab: 1
+    abNum: 7
+  - num: 6
+    color: 2
+    ab: 1
+    abNum: 2
+  cpu1Cards:
+  - num: 7
+    color: 0
+    ab: 1
+    abNum: 7
+  - num: 2
+    color: 0
+    ab: 1
+    abNum: 7
+  - num: 2
+    color: 0
+    ab: 1
+    abNum: 0
+  - num: 3
+    color: 0
+    ab: 0
+    abNum: 0
+  cpu2Cards:
+  - num: 8
+    color: 2
+    ab: 1
+    abNum: 16
+  - num: 9
+    color: 2
+    ab: 1
+    abNum: 16
+  - num: 10
+    color: 2
+    ab: 1
+    abNum: 16
+  - num: 0
+    color: 2
+    ab: 0
+    abNum: 16
+  cpu3Cards:
+  - num: 6
+    color: 1
+    ab: 1
+    abNum: 4
+  - num: 7
+    color: 1
+    ab: 1
+    abNum: 2
+  - num: 8
+    color: 1
+    ab: 1
+    abNum: 3
+  - num: 9
+    color: 1
+    ab: 0
+    abNum: 3
+  taroCardNum: 1
