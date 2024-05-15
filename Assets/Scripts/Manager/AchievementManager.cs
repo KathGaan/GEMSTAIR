@@ -1,7 +1,9 @@
 using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AchievementManager : MonoSingletonManager<AchievementManager>
 {
@@ -10,6 +12,10 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
     [SerializeField] Material material;
 
     [SerializeField] Transform achievements;
+
+    [SerializeField] GameObject achievementClearUI;
+
+    [SerializeField] SoundClip soundClip;
 
     private List<AchievementObject> achievementObjects;
 
@@ -70,13 +76,33 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
             case 25:
             case 30:
             case 35:
-                DataManager.Instance.SaveAchievementData(i);
-                
-                if(SteamManager.Initialized)
+                SaveAchievementData(i);
+                break;
+            case 4:
+                if (GameManager.Instance.CurrentLevelData.BlueField.Count != 6)
+                    return;
+                for (int j = 0; j < 6; j++)
                 {
-                    SteamUserStats.SetAchievement("STAGE_" + i);
+                    if (GameManager.Instance.CurrentLevelData.BlueField[j].num != j)
+                        return;
+                }
+                SaveAchievementData(i);
+                break;
+            case 12:
+                if (GameManager.Instance.CurrentLevelData.BlueField.Count != 12)
+                    return;
+                for (int j = 0; j < 12; j++)
+                {
+                    if (GameManager.Instance.CurrentLevelData.BlueField[j].num != j)
+                        return;
+                }
+                SaveAchievementData(i);
+                break;
 
-                    SteamUserStats.StoreStats();
+            case 14:
+                if(GameManager.Instance.PlayManager.TaroHand.childCount == 1)
+                {
+                    SaveAchievementData(i);
                 }
                 break;
 
@@ -84,5 +110,37 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
                 break;
         }
     }    
+
+    private void SaveAchievementData(int num)
+    {
+        DataManager.Instance.SaveAchievementData(num);
+
+        if (SteamManager.Initialized)
+        {
+            SteamUserStats.SetAchievement("STAGE_" + num);
+
+            SteamUserStats.StoreStats();
+        }
+    }
+
+    public void ApearClearUI()
+    {
+        SoundManager.Instance.SFXPlay(soundClip.Clips[0]);
+
+        achievementClearUI.transform.GetChild(0).GetComponent<Image>().sprite = ResourcesManager.Instance.Load<Sprite>("Achievement/STAGE_" + GameManager.Instance.selectedLevel);
+        achievementClearUI.GetComponentInChildren<TextMeshProUGUI>().text = TextManager.Instance.LoadString("AchieveInfoText", GameManager.Instance.selectedLevel);
+        StartCoroutine(ApearUI());
+    }
+
+    private IEnumerator ApearUI()
+    {
+        achievementClearUI.SetActive(true);
+
+        achievementClearUI.GetComponent<Animator>().SetTrigger("Clear");
+
+        yield return YieldCache.WaitForSeconds(4f);
+
+        achievementClearUI.SetActive(false);
+    }
 
 }

@@ -72,6 +72,8 @@ public class DataManager : SingletonManager<DataManager>
             return;
 
         Data.Achievement.Add(num);
+
+        AchievementManager.Instance.ApearClearUI();
     }
 }
 
