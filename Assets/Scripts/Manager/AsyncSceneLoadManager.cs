@@ -45,7 +45,7 @@ public class AsyncSceneLoadManager : MonoSingletonManager<AsyncSceneLoadManager>
 
         while (true)
         {
-            sceneLoadUI.GetComponentInChildren<Slider>().value += Time.unscaledDeltaTime;
+            sceneLoadUI.GetComponentInChildren<Slider>().value += Time.unscaledDeltaTime * 3;
 
             if(sceneLoadUI.GetComponentInChildren<Slider>().value >= 2f)
             {

@@ -12,6 +12,8 @@ public class LevelSelectManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI buttonText;
 
+    [SerializeField] GameObject hintUI;
+
     private void Start()
     {
         GetLevelData();
@@ -46,6 +48,11 @@ public class LevelSelectManager : MonoBehaviour
     public void SelectLevel(int num)
     {
         SoundManager.Instance.ButtonSound();
+
+        if (hintUI.activeSelf)
+        {
+            hintUI.SetActive(false);
+        }
 
         levelName.text = num + ". " + TextManager.Instance.LoadString("LevelNameText",num);
         levelInfo.text = TextManager.Instance.LoadString("LevelInfoText", num);

@@ -17,8 +17,13 @@ public class WhiteField : DropPlace
             return false;
         }
 
-        if (GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.White)
+        if (GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.White && GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.None)
             return false;
+
+        if (GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.None)
+        {
+            UniqueGemFunction.PlacedColor = CardColor.White;
+        }
 
         if (transform.childCount > 0 && GameManager.Instance.CurrentLevelData.WhiteField[transform.childCount - 1].num >= GameManager.dragObject.GetComponent<DragObject>().Info.num)
             return false;

@@ -17,8 +17,13 @@ public class BlueField : DropPlace
             return false;
         }
 
-        if (GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.Blue)
+        if (GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.Blue && GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.None)
             return false;
+
+        if (GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.None)
+        {
+            UniqueGemFunction.PlacedColor = CardColor.Blue;
+        }
 
         if (transform.childCount > 0 && GameManager.Instance.CurrentLevelData.BlueField[transform.childCount - 1].num >= GameManager.dragObject.GetComponent<DragObject>().Info.num) 
             return false;

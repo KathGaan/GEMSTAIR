@@ -34,14 +34,33 @@ public abstract class DropPlace :MonoBehaviour, IDropHandler
 
     private void AddListData()
     {
-        GameManager.Instance.PlayManager.GetColorParent(GameManager.dragObject.GetComponent<DragObject>().Info.color).Add(GameManager.dragObject.GetComponent<DragObject>().Info);
+        if (GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.None)
+        {
+            GameManager.Instance.PlayManager.GetColorParent(UniqueGemFunction.PlacedColor).Add(GameManager.dragObject.GetComponent<DragObject>().Info);
+        }
+        else
+        {
+            GameManager.Instance.PlayManager.GetColorParent(GameManager.dragObject.GetComponent<DragObject>().Info.color).Add(GameManager.dragObject.GetComponent<DragObject>().Info);
+        }
+
         for (int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
         {
             if (GameManager.Instance.CurrentLevelData.PlayerCards[i].color == GameManager.dragObject.GetComponent<DragObject>().Info.color)
             {
                 if (GameManager.Instance.CurrentLevelData.PlayerCards[i].num == GameManager.dragObject.GetComponent<DragObject>().Info.num)
                 {
-                    if (GameManager.Instance.CurrentLevelData.PlayerCards[i].ab == GameManager.dragObject.GetComponent<DragObject>().Info.ab && GameManager.dragObject.GetComponent<DragObject>().Info.ab == true)
+                    if(GameManager.Instance.CurrentLevelData.PlayerCards[i].color == CardColor.None)
+                    {
+                        if (GameManager.Instance.CurrentLevelData.PlayerCards[i].abNum == GameManager.dragObject.GetComponent<DragObject>().Info.abNum)
+                        {
+                            GameManager.Instance.PlayManager.UniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.PlayerUse, GameManager.dragObject.GetComponent<DragObject>());
+                            
+                            GameManager.Instance.CurrentLevelData.PlayerCards.RemoveAt(i);
+                            
+                            break;
+                        }
+                    }
+                    else if (GameManager.Instance.CurrentLevelData.PlayerCards[i].ab == GameManager.dragObject.GetComponent<DragObject>().Info.ab && GameManager.dragObject.GetComponent<DragObject>().Info.ab == true)
                     {
                         if (GameManager.Instance.CurrentLevelData.PlayerCards[i].abNum == GameManager.dragObject.GetComponent<DragObject>().Info.abNum)
                         {

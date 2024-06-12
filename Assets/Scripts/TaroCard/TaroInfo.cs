@@ -52,6 +52,12 @@ public class TaroInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
+    public void HintSetting()
+    {
+        ImageSetting();
+        ChangeLanguageReset();
+    }
+
 
     //Infomation
 

@@ -4548,7 +4548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.4039216, b: 0.4039216, a: 1}
+  m_Color: {r: 0.3764706, g: 0.87058824, b: 0.2901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4782,6 +4782,7 @@ MonoBehaviour:
   - {fileID: 6443053649954336689, guid: 2f1cb0ba26863294f8e1941af66c9d29, type: 3}
   - {fileID: 3808417145101504562, guid: 81a7e75fd7e51d740be8317b94201fec, type: 3}
   - {fileID: 58048723635068957, guid: f8718f21f6586284caec69ff1ba08f05, type: 3}
+  - {fileID: 812476470681629455, guid: 8265f444e99ab4b418d8c6e9b7c46cc1, type: 3}
   taroPrefab: {fileID: 5248514580190368045, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
   taroHand: {fileID: 666330239}
   settingTransforms:
@@ -6135,7 +6136,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.5372549, g: 1, b: 0.9176471, a: 0}
+  m_BackGroundColor: {r: 0.37647063, g: 0.8705883, b: 0.2901961, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class TaroGemFunction 
 {
+    public static bool BlockTaroGem;
+
     private delegate void TaroGemDelegate(LoadAt loadAt);
 
     private List<TaroGemDelegate> taroGemFunctions;
@@ -42,6 +44,13 @@ public class TaroGemFunction
 
     public void ActiveFunction(LoadAt loadAt, DragObject callObj)
     {
+        if (BlockTaroGem)
+        {
+            GameManager.Instance.PlayManager.DestroySound();
+
+            return;
+        }
+
         targetObj = callObj;
 
         taroGemFunctions[callObj.Info.abNum](loadAt);
@@ -174,7 +183,9 @@ public class TaroGemFunction
             case LoadAt.CpuUse:
                 GameManager.Instance.PlayManager.GetColorParent(targetObj.Info.color).RemoveAt(GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount - 2);
                 GameManager.Instance.PlayManager.DestroyGem(
-                GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).GetChild(GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount - 2));
+                GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).GetChild(GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount - 2)
+                , targetObj.Info.color
+                );
                 GameManager.Instance.PlayManager.PlayGetChilds();
                 break;
 
@@ -321,7 +332,9 @@ public class TaroGemFunction
                 {
                     GameManager.Instance.PlayManager.GetColorParent((CardColor)i).RemoveAt(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount - 1);
                     GameManager.Instance.PlayManager.DestroyGem(
-                    GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).GetChild(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount - 1));
+                    GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).GetChild(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount - 1)
+                    , (CardColor)i
+                    );
                 }
                 GameManager.Instance.PlayManager.PlayGetChilds();
                 break;
@@ -386,6 +399,8 @@ public class TaroGemFunction
                 break;
             case LoadAt.CpuUse:
                 GameManager.Instance.PlayManager.CpuSkip[GameManager.Instance.PlayManager.CpuX] = true;
+
+                GameManager.Instance.PlayManager.ChangeCpuTaros((CardColor)GameManager.Instance.PlayManager.CpuX, 21);
                 break;
 
             default: break;

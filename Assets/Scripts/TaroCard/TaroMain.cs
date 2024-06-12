@@ -72,6 +72,7 @@ public class TaroMain : MonoBehaviour
         {
             if (selectedTaroCards[i] == num)
             {
+                SoundManager.Instance.ButtonSound();
                 selectedTaroCards.RemoveAt(i);
                 taroCards[num].color = disVisualCard;
                 startButton.interactable = false;
@@ -86,6 +87,7 @@ public class TaroMain : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.ButtonSound();
         selectedTaroCards.Add(num);
         taroCards[num].color = visualCard;
         howManyTaros--;

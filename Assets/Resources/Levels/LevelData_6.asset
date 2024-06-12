@@ -15,34 +15,61 @@ MonoBehaviour:
   redField:
   - num: 0
     color: 0
+    ab: 0
+    abNum: 0
   blueField:
   - num: 1
     color: 1
+    ab: 0
+    abNum: 0
   whiteField:
   - num: 2
     color: 2
+    ab: 0
+    abNum: 0
   playerCards:
   - num: 4
     color: 2
+    ab: 0
+    abNum: 0
   - num: 6
     color: 1
+    ab: 0
+    abNum: 0
   - num: 8
     color: 0
+    ab: 0
+    abNum: 0
   cpu1Cards:
   - num: 10
     color: 0
+    ab: 0
+    abNum: 0
   cpu2Cards:
   - num: 2
     color: 1
+    ab: 0
+    abNum: 0
   - num: 3
     color: 2
+    ab: 0
+    abNum: 0
   - num: 4
     color: 1
+    ab: 0
+    abNum: 0
   cpu3Cards:
   - num: 3
     color: 1
+    ab: 0
+    abNum: 0
   - num: 4
     color: 2
+    ab: 0
+    abNum: 0
   - num: 5
     color: 1
+    ab: 0
+    abNum: 0
   taroCardNum: 1
+  taroHint: 0d000000

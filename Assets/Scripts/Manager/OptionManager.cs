@@ -50,15 +50,6 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         }
 
         OptionTextSetting();
-
-        if (AsyncSceneLoadManager.Instance.nowScene == SceneName.Play)
-        {
-            if (!SteamManager.Initialized) { return; }
-
-            SteamUserStats.SetAchievement("CHANGE_IN_PLAY");
-
-            SteamUserStats.StoreStats();
-        }
     }
 
     [SerializeField] GameObject optionUI;

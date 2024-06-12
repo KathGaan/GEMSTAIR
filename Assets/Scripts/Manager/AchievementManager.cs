@@ -21,7 +21,39 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
 
     private void Start()
     {
+
         SetAchieveData();
+    }
+
+    public IEnumerator UpdateAchievementTask()
+    {
+        while (true)
+        {
+            switch (GameManager.Instance.selectedLevel)
+            {
+                case 29:
+                    if (GameManager.Instance.PlayManager.TaroHand.childCount >= 4)
+                    {
+                        SaveAchievementData(GameManager.Instance.selectedLevel);
+                        yield break;
+                    }
+                    break;
+                case 34:
+                    if(GameManager.Instance.PlayManager.PlayerHand.childCount >= 4)
+                    {
+                        if (GameManager.Instance.CurrentLevelData.PlayerCards[0].num == 1)
+                        {
+                            SaveAchievementData(GameManager.Instance.selectedLevel);
+                            yield break;
+                        }
+                    }
+                    break;
+
+                default: yield break;
+            }
+
+            yield return null;
+        }
     }
 
     private void SetAchieveData()
@@ -76,6 +108,7 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
             case 25:
             case 30:
             case 35:
+            case 40:
                 SaveAchievementData(i);
                 break;
             case 4:

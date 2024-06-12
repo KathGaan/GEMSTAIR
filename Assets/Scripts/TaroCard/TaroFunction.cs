@@ -201,7 +201,8 @@ public class TaroFunction
                 GameManager.Instance.PlayManager.DestroyGem
                     (
                         GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).GetChild(GameManager.Instance.PlayManager.GetParentTransform((CardColor)i).childCount - 1)
-                        ,true
+                        , (CardColor)i
+                        , true
                     );
             }
         }
@@ -299,7 +300,9 @@ public class TaroFunction
         {
             GameManager.Instance.PlayManager.GetColorParent(GameManager.Instance.PlayManager.TaroColor).RemoveAt(GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).childCount - 1);
             GameManager.Instance.PlayManager.DestroyGem(
-            GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).GetChild(GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).childCount - 1));
+            GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).GetChild(GameManager.Instance.PlayManager.GetParentTransform(GameManager.Instance.PlayManager.TaroColor).childCount - 1)
+            ,GameManager.Instance.PlayManager.TaroColor
+            );
         }
 
         if (UnityEngine.Random.Range(0, 4) != 2)

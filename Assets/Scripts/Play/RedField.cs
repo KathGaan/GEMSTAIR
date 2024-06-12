@@ -17,8 +17,14 @@ public class RedField : DropPlace
             return false;
         }
 
-        if (GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.Red)
+        if (GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.Red && GameManager.dragObject.GetComponent<DragObject>().Info.color != CardColor.None)
             return false;
+
+        if(GameManager.dragObject.GetComponent<DragObject>().Info.color == CardColor.None)
+        {
+            UniqueGemFunction.PlacedColor = CardColor.Red;
+        }
+
 
         if (transform.childCount > 0 && GameManager.Instance.CurrentLevelData.RedField[transform.childCount - 1].num >= GameManager.dragObject.GetComponent<DragObject>().Info.num) 
             return false;

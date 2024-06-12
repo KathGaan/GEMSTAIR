@@ -40,7 +40,7 @@ public class GemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
         infoText = "";
     }
 
-    private void ImageSetting()
+    public void ImageSetting()
     {
         taroImage.sprite = ResourcesManager.Instance.Load<Sprite>("TaroImage/" + gemAbNum);
     }

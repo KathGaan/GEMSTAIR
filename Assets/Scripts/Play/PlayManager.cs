@@ -136,6 +136,13 @@ public class PlayManager : MonoBehaviour
         get { return taroGemFunction; }
     }
 
+    private UniqueGemFunction uniqueGemFunction;
+
+    public UniqueGemFunction UniqueGemFunction
+    {
+        get { return uniqueGemFunction; }
+    }    
+
     private bool skipPlayerTurn;
 
     public bool SkipPlayerTurn
@@ -151,6 +158,14 @@ public class PlayManager : MonoBehaviour
     private Color invisibleColor = new Color(1, 1, 1, 0);
     private Color visibleColor = new Color(1, 1, 1, 1);
 
+    private bool dontDestroy;
+
+    public bool DontDestroy
+    {
+        set { dontDestroy = value; }
+        get { return dontDestroy; }
+    }
+
     //Start
     private void Start()
     {
@@ -160,9 +175,13 @@ public class PlayManager : MonoBehaviour
 
         taroGemFunction = new TaroGemFunction();
 
+        uniqueGemFunction = new UniqueGemFunction();
+
         StartSetting();
 
         TrunOffPlayerHand();
+
+        StartCoroutine(AchievementManager.Instance.UpdateAchievementTask());
     }
 
     private void StartSetting()
@@ -175,7 +194,17 @@ public class PlayManager : MonoBehaviour
         {
             for (int j = 0; j < getSetting[i].Count; j++)
             {
-                if (getSetting[i][j].ab == true)
+                if (getSetting[i][j].color == CardColor.None)
+                {
+                    prefabs[6].GetComponent<UniqueGemInfo>().UniqueGemNum = getSetting[i][j].abNum;
+
+                    newObj = Instantiate(prefabs[6], settingTransforms[i]);
+
+                    newObj.GetComponent<DragObject>().Info.num = getSetting[i][j].num;
+                    newObj.GetComponent<DragObject>().Info.abNum = getSetting[i][j].abNum;
+                    newObj.GetComponentInChildren<TextMeshProUGUI>().text = "" + getSetting[i][j].num;
+                }
+                else if (getSetting[i][j].ab == true)
                 {
                     prefabs[(int)getSetting[i][j].color + 3].GetComponent<GemInfo>().GemAbNum = getSetting[i][j].abNum;
 
@@ -255,13 +284,21 @@ public class PlayManager : MonoBehaviour
 
         for(int i = 0; i < cpuTaros.Count; i++)
         {
-            cpuTaros[i].color = invisibleColor;
-            fieldTaros[i].color = invisibleColor;
+            if (cpuSkip[i] == false)
+            {
+                cpuTaros[i].color = invisibleColor;
+                fieldTaros[i].color = invisibleColor;
+            }
         }
 
         if (skipCpuAfter == 1)
         {
             ChangeCpuTaros(21);
+        }
+
+        if(TaroGemFunction.BlockTaroGem)
+        {
+            TaroGemFunction.BlockTaroGem = false;
         }
 
         waitIAnim.SetTrigger("PlayerTurn");
@@ -618,9 +655,21 @@ public class PlayManager : MonoBehaviour
 
         for (int j = 0; j < i; j++)
         {
-            if(settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.ab)
+            if (settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.color == CardColor.None)
+            {
+                UniqueGemFunction.PlacedColor = TaroColor;
+                uniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.OnBreak, settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>());
+            }
+            else if(settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.ab)
             {
                 taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>());
+            }
+
+            if(dontDestroy)
+            {
+                dontDestroy = false;
+                PlayGetChilds();
+                continue;
             }
 
             settingTransforms[(int)taroColor].GetChild(0).SetParent(destroyGem);
@@ -635,9 +684,21 @@ public class PlayManager : MonoBehaviour
 
         for (int j = 0; j < i; j++)
         {
-            if (settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>().Info.ab)
+            if (settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.color == CardColor.None)
+            {
+                UniqueGemFunction.PlacedColor = color;
+                uniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.OnBreak, settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>());
+            }
+            else if (settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>().Info.ab)
             {
                 taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>());
+            }
+
+            if (dontDestroy)
+            {
+                dontDestroy = false;
+                PlayGetChilds();
+                continue;
             }
 
             settingTransforms[(int)color].GetChild(0).SetParent(destroyGem);
@@ -645,14 +706,26 @@ public class PlayManager : MonoBehaviour
     }
 
 
-    public void DestroyGem(Transform gem , bool soundFalse = false)
+    public void DestroyGem(Transform gem ,CardColor color , bool soundFalse = false)
     {
         if(!soundFalse)
             SoundManager.Instance.SFXPlay(soundClip.Clips[7]);
 
-        if (gem.GetComponent<DragObject>().Info.ab)
+        if (gem.GetComponent<DragObject>().Info.color == CardColor.None)
+        {
+            UniqueGemFunction.PlacedColor = color;
+            uniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.OnBreak, gem.GetComponent<DragObject>());
+        }
+        else if (gem.GetComponent<DragObject>().Info.ab)
         {
             taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, gem.GetComponent<DragObject>());
+        }
+
+        if (dontDestroy)
+        {
+            dontDestroy = false;
+            PlayGetChilds();
+            return;
         }
 
         gem.SetParent(destroyGem);
@@ -674,7 +747,12 @@ public class PlayManager : MonoBehaviour
 
         int i = 0;
 
-        if (gem.ab == true)
+        if(gem.color == CardColor.None)
+        {
+            i = 3;
+            prefabs[(int)gem.color + i].GetComponent<UniqueGemInfo>().UniqueGemNum = gem.abNum;
+        }
+        else if (gem.ab == true)
         {
             i = 3;
             prefabs[(int)gem.color + i].GetComponent<GemInfo>().GemAbNum = gem.abNum;
