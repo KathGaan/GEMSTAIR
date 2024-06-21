@@ -59,6 +59,9 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         SoundManager.Instance.ButtonSound();
 
         Time.timeScale = 1f;
+
+        InputManager.Instance.optionOpened = false;
+
         optionUI.SetActive(false);
     }
 
@@ -91,6 +94,8 @@ public class OptionManager : MonoSingletonManager<OptionManager>
 
         Time.timeScale = 0f;
 
+        InputManager.Instance.optionOpened = true;
+
         optionUI.SetActive(true);
 
         if (SceneManager.GetActiveScene().name == SceneName.MainMenu.ToString())
@@ -118,6 +123,10 @@ public class OptionManager : MonoSingletonManager<OptionManager>
         if (Input.GetKeyDown(KeyCode.Escape) && !optionUI.activeSelf)
         {
             OpenOption();
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && optionUI.activeSelf)
+        {
+            LeaveOption();
         }
     }
 

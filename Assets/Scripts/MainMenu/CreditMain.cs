@@ -10,7 +10,11 @@ public class CreditMain : MonoBehaviour
     private void Start()
     {
         TextSetting();
+    }
 
+    private void OnEnable()
+    {
+        TextSetting();
         OptionManager.Instance.changeLanguage += TextSetting;
     }
 

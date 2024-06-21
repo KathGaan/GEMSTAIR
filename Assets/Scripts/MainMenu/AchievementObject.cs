@@ -21,16 +21,6 @@ public class AchievementObject : MonoBehaviour , IPointerEnterHandler, IPointerE
 
     [SerializeField] Image image;
 
-    private void Start()
-    {
-        OptionManager.Instance.changeLanguage += ChangeLanguageReset;
-    }
-
-    private void OnDisable()
-    {
-        OptionManager.Instance.changeLanguage -= ChangeLanguageReset;
-    }
-
     public void SetGrayImage(Material material)
     {
         image.material = material;
@@ -50,12 +40,11 @@ public class AchievementObject : MonoBehaviour , IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (infoText.Length < 1)
-        {
-            infoText = TextManager.Instance.LoadString("AchieveInfoText", achieveNum);
+        ChangeLanguageReset();
 
-            infoTextUI.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
-        }
+        infoText = TextManager.Instance.LoadString("AchieveInfoText", achieveNum);
+
+        infoTextUI.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
 
         infoTextUI.SetActive(true);
     }

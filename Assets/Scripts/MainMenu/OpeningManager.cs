@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class OpeningManager : MonoBehaviour
 {
-    [SerializeField] SoundClip clip = new SoundClip();
-
     private void Start()
     {
         StartCoroutine(LoadScene());
@@ -18,13 +16,11 @@ public class OpeningManager : MonoBehaviour
 
         gameObject.GetComponent<Animator>().SetTrigger("Start");
 
-        SoundManager.Instance.SFXPlay(clip.Clips[0]);
-
         AsyncOperation operation = SceneManager.LoadSceneAsync("MainMenu");
 
         operation.allowSceneActivation = false;
 
-        yield return YieldCache.WaitForSeconds(2.5f);
+        yield return YieldCache.WaitForSeconds(1.25f);
 
         operation.allowSceneActivation = true;
     }

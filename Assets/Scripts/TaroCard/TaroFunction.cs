@@ -120,11 +120,18 @@ public class TaroFunction
 
         CardColor j = GameManager.Instance.CurrentLevelData.PlayerCards[0].color;
 
+        int k = GameManager.Instance.CurrentLevelData.PlayerCards[0].abNum;
+
         GameManager.Instance.PlayManager.Return5 += 1;
 
         for (int i = 0; i < GameManager.Instance.CurrentLevelData.PlayerCards.Count; i++)
         { 
             if(j != GameManager.Instance.CurrentLevelData.PlayerCards[i].color)
+            {
+                GameManager.Instance.PlayManager.Return5 = 0;
+                break;
+            }
+            else if(j == CardColor.None && k != GameManager.Instance.CurrentLevelData.PlayerCards[i].abNum)
             {
                 GameManager.Instance.PlayManager.Return5 = 0;
                 break;
