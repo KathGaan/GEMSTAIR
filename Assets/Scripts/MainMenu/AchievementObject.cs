@@ -31,17 +31,10 @@ public class AchievementObject : MonoBehaviour , IPointerEnterHandler, IPointerE
         image.material = null;
     }
 
-    private void ChangeLanguageReset()
-    {
-        infoText = "";
-    }
-
     //Infomation
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ChangeLanguageReset();
-
         infoText = TextManager.Instance.LoadString("AchieveInfoText", achieveNum);
 
         infoTextUI.GetComponentInChildren<TextMeshProUGUI>().text = infoText;

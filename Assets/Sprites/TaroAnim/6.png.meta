@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -114,9 +114,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 720
-        width: 320
-        height: 180
+        y: 288
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: 6_1
       rect:
         serializedVersion: 2
-        x: 320
-        y: 720
-        width: 320
-        height: 180
+        x: 128
+        y: 288
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +155,10 @@ TextureImporter:
       name: 6_2
       rect:
         serializedVersion: 2
-        x: 640
-        y: 720
-        width: 320
-        height: 180
+        x: 256
+        y: 288
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -177,9 +177,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 540
-        width: 320
-        height: 180
+        y: 216
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +197,10 @@ TextureImporter:
       name: 6_4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 540
-        width: 320
-        height: 180
+        x: 128
+        y: 216
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,10 +218,10 @@ TextureImporter:
       name: 6_5
       rect:
         serializedVersion: 2
-        x: 640
-        y: 540
-        width: 320
-        height: 180
+        x: 256
+        y: 216
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,9 +240,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 360
-        width: 320
-        height: 180
+        y: 144
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,10 +260,10 @@ TextureImporter:
       name: 6_7
       rect:
         serializedVersion: 2
-        x: 320
-        y: 360
-        width: 320
-        height: 180
+        x: 128
+        y: 144
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,10 +281,10 @@ TextureImporter:
       name: 6_8
       rect:
         serializedVersion: 2
-        x: 640
-        y: 360
-        width: 320
-        height: 180
+        x: 256
+        y: 144
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,9 +303,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 180
-        width: 320
-        height: 180
+        y: 72
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -323,10 +323,10 @@ TextureImporter:
       name: 6_10
       rect:
         serializedVersion: 2
-        x: 320
-        y: 180
-        width: 320
-        height: 180
+        x: 128
+        y: 72
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -344,10 +344,10 @@ TextureImporter:
       name: 6_11
       rect:
         serializedVersion: 2
-        x: 640
-        y: 180
-        width: 320
-        height: 180
+        x: 256
+        y: 72
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -367,8 +367,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 320
-        height: 180
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -386,10 +386,10 @@ TextureImporter:
       name: 6_13
       rect:
         serializedVersion: 2
-        x: 320
+        x: 128
         y: 0
-        width: 320
-        height: 180
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -414,17 +414,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      5_0: -1038629435
-      5_1: 423608310
-      5_10: -1819396684
-      5_2: -1605597704
-      5_3: -1449516111
-      5_4: 1386142768
-      5_5: -1979943083
-      5_6: 1057476060
-      5_7: 127573756
-      5_8: -798708213
-      5_9: 1213621802
       6_0: 2118306745
       6_1: 477683272
       6_10: -1904936577

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TaroGemFunction 
 {
-    public static bool BlockTaroGem;
+    public static int BlockTaroGem;
 
     private delegate void TaroGemDelegate(LoadAt loadAt);
 
@@ -17,6 +17,8 @@ public class TaroGemFunction
     public TaroGemFunction()
     {
         taroGemFunctions = new List<TaroGemDelegate>();
+
+        BlockTaroGem = 0;
 
         string methodName = "";
 
@@ -44,16 +46,21 @@ public class TaroGemFunction
 
     public void ActiveFunction(LoadAt loadAt, DragObject callObj)
     {
-        if (BlockTaroGem)
-        {
-            GameManager.Instance.PlayManager.DestroySound();
-
-            return;
-        }
-
         targetObj = callObj;
 
         taroGemFunctions[callObj.Info.abNum](loadAt);
+    }
+
+    private bool Blocked()
+    {
+        if (BlockTaroGem > 0)
+        {
+            GameManager.Instance.PlayManager.DestroySound();
+            GameManager.Instance.PlayManager.RemoveBlockTaroGem();
+            return true;
+        }
+
+        return false;
     }
 
     private void TaroGemGenerate(int num)
@@ -80,6 +87,8 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.OnBreak:
+                if (Blocked())
+                    return;
                 GameManager.Instance.PlayManager.LevelFailed();
                 break;
             default: break;
@@ -92,6 +101,8 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
 
                 targetObj.Info.num = 0;
 
@@ -109,6 +120,9 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
                 TaroGemGenerate(1);
                 GameManager.Instance.PlayManager.PlayGetChilds();
                 break;
@@ -123,6 +137,9 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
                 TaroGemGenerate(6);
                 GameManager.Instance.PlayManager.PlayGetChilds();
                 break;
@@ -136,6 +153,9 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
                 TaroGemGenerate(11);
                 GameManager.Instance.PlayManager.PlayGetChilds();
                 break;
@@ -149,13 +169,19 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
-                if(targetObj.Info == targetObj.transform.parent.GetChild(0).GetComponent<DragObject>().Info)
+                if (Blocked())
+                    return;
+
+                if (targetObj.Info == targetObj.transform.parent.GetChild(0).GetComponent<DragObject>().Info)
                 {
                     GameManager.Instance.PlayManager.LevelFailed();
                 }
                 break;
 
             case LoadAt.Changed:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.LevelFailed();
                 break;
         }
@@ -166,6 +192,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 if (GameManager.Instance.PlayManager.PlayerHand.childCount > 0)
                 {
                     GameManager.Instance.PlayManager.LevelFailed();
@@ -181,6 +210,9 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.GetColorParent(targetObj.Info.color).RemoveAt(GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount - 2);
                 GameManager.Instance.PlayManager.DestroyGem(
                 GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).GetChild(GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount - 2)
@@ -199,6 +231,9 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
 
                 targetObj.Info.num = 10;
 
@@ -215,9 +250,15 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.TaroGem9 = true;
                 break;
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.CpuX--;
                 break;
             default: break;
@@ -229,6 +270,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 if (UnityEngine.Random.Range(0, 2) == 1)
                 {
                     GameManager.Instance.PlayManager.AddTaro(10);
@@ -254,6 +298,9 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
 
                 CardColor color = targetObj.Info.color;
 
@@ -277,6 +324,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 if (GameManager.Instance.PlayManager.PlayerHand.childCount <= 0)
                 {
                     GameManager.Instance.PlayManager.LevelFailed();
@@ -294,6 +344,9 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
 
                 targetObj.Info.num = GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount;
 
@@ -309,6 +362,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.CpuTask:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.LevelFailed();
                 break;
 
@@ -322,6 +378,9 @@ public class TaroGemFunction
         {
             case LoadAt.CpuUse:
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
 
                 int i = (int)targetObj.Info.color + 1;
 
@@ -347,6 +406,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.AddTaro(17);
                 break;
 
@@ -359,6 +421,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.AddTaro(18);
                 break;
 
@@ -371,6 +436,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.AddTaro(19);
                 break;
 
@@ -383,6 +451,9 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.OnBreak:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.AddTaro(20);
                 break;
 
@@ -395,9 +466,15 @@ public class TaroGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.SkipPlayerTurn = true;
                 break;
             case LoadAt.CpuUse:
+                if (Blocked())
+                    return;
+
                 GameManager.Instance.PlayManager.CpuSkip[GameManager.Instance.PlayManager.CpuX] = true;
 
                 GameManager.Instance.PlayManager.ChangeCpuTaros((CardColor)GameManager.Instance.PlayManager.CpuX, 21);

@@ -26,18 +26,6 @@ public class GemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
     private void Start()
     {
         ImageSetting();
-
-        OptionManager.Instance.changeLanguage += ChangeLanguageReset;
-    }
-
-    private void OnDisable()
-    {
-        OptionManager.Instance.changeLanguage -= ChangeLanguageReset;
-    }
-
-    private void ChangeLanguageReset()
-    {
-        infoText = "";
     }
 
     public void ImageSetting()
@@ -50,12 +38,9 @@ public class GemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (infoText.Length < 1)
-        {
-            infoText = TextManager.Instance.LoadString("GemInfoText", gemAbNum);
+        infoText = TextManager.Instance.LoadString("GemInfoText", gemAbNum);
 
-            infoTextUI.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
-        }
+        infoTextUI.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
 
         infoTextUI.SetActive(true);
     }

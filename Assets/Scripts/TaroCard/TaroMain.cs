@@ -45,6 +45,11 @@ public class TaroMain : MonoBehaviour
 
         TextSet();
 
+        if(GameManager.Instance.selectedLevel <= 20)
+        {
+            taroCards[14].GetComponent<Button>().interactable = false;
+        }
+
         OptionManager.Instance.changeLanguage += TextSet;
         OptionManager.Instance.changeLanguage += howManyText;
     }

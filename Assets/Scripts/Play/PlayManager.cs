@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -155,6 +153,8 @@ public class PlayManager : MonoBehaviour
 
     [SerializeField] List<Image> fieldTaros;
 
+    [SerializeField] Image blockTaro;
+
     private Color invisibleColor = new Color(1, 1, 1, 0);
     private Color visibleColor = new Color(1, 1, 1, 1);
 
@@ -260,6 +260,21 @@ public class PlayManager : MonoBehaviour
         StartCoroutine(PlayerTurnStart());
     }
 
+    public void RemoveBlockTaroGem()
+    {
+        TaroGemFunction.BlockTaroGem--;
+
+        if(TaroGemFunction.BlockTaroGem <= 0)
+        {
+            blockTaro.color = invisibleColor;
+        }
+    }
+
+    public void VisualBlockTaroGem()
+    {
+        blockTaro.color = visibleColor;
+    }
+
     //PlayerTurn
 
     public IEnumerator PlayerTurnStart()
@@ -294,11 +309,6 @@ public class PlayManager : MonoBehaviour
         if (skipCpuAfter == 1)
         {
             ChangeCpuTaros(21);
-        }
-
-        if(TaroGemFunction.BlockTaroGem)
-        {
-            TaroGemFunction.BlockTaroGem = false;
         }
 
         waitIAnim.SetTrigger("PlayerTurn");

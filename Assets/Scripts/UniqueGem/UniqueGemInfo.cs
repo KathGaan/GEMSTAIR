@@ -24,19 +24,8 @@ public class UniqueGemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void Start()
     {
         ImageSetting();
-
-        OptionManager.Instance.changeLanguage += ChangeLanguageReset;
     }
 
-    private void OnDisable()
-    {
-        OptionManager.Instance.changeLanguage -= ChangeLanguageReset;
-    }
-
-    private void ChangeLanguageReset()
-    {
-        infoText = "";
-    }
 
     private void ImageSetting()
     {
@@ -46,12 +35,10 @@ public class UniqueGemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (infoText.Length < 1)
-        {
-            infoText = TextManager.Instance.LoadString("UniqueGemInfoText", uniqueGemNum);
 
-            infoTextUI.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
-        }
+        infoText = TextManager.Instance.LoadString("UniqueGemInfoText", uniqueGemNum);
+
+        infoTextUI.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
 
         infoTextUI.SetActive(true);
     }

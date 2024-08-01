@@ -93,6 +93,8 @@ MonoBehaviour:
   info:
     num: 5
     color: 0
+    ab: 0
+    abNum: 0
   soundClip:
     clips:
     - {fileID: 8300000, guid: 748036e101974b14a92fb81d1cd9516a, type: 3}
@@ -183,8 +185,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282006263
-  m_fontColor: {r: 0.96862745, g: 0.22745098, b: 0.22745098, a: 1}
+    rgba: 4290183287
+  m_fontColor: {r: 0.46666667, g: 0, b: 0.7176471, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

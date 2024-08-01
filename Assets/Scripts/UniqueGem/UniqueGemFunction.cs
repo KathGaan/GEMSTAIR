@@ -118,7 +118,7 @@ public class UniqueGemFunction
 
                 GameManager.Instance.PlayManager.GenerateGem(targetObj.Info).transform.SetParent(GameManager.Instance.PlayManager.PlayerHand);
 
-                GameManager.Instance.PlayManager.PlayGetChilds();
+                GameManager.Instance.PlayManager.PlayerHand.GetComponent<GridField>().GetChilds();
                 break;
 
             default: break;
@@ -130,6 +130,15 @@ public class UniqueGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
+                if (UnityEngine.Random.Range(0, 20) != 5)
+                    return;
+
+                GameManager.Instance.PlayManager.GetColorParent(PlacedColor).RemoveAt(GameManager.Instance.PlayManager.GetParentTransform(PlacedColor).childCount - 1);
+                GameManager.Instance.PlayManager.DestroyGem(targetObj.transform, PlacedColor);
+                GameManager.Instance.PlayManager.PlayGetChilds();
+
+                AchievementManager.Instance.SaveAchievementData(44);
+
                 break;
 
             default: break;
@@ -141,7 +150,8 @@ public class UniqueGemFunction
         switch (loadAt)
         {
             case LoadAt.PlayerUse:
-                TaroGemFunction.BlockTaroGem = true;
+                TaroGemFunction.BlockTaroGem += 1;
+                GameManager.Instance.PlayManager.VisualBlockTaroGem();
                 break;
 
             default: break;

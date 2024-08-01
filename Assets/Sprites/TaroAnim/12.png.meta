@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -114,9 +114,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 540
-        width: 320
-        height: 180
+        y: 216
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,10 +134,10 @@ TextureImporter:
       name: 12_1
       rect:
         serializedVersion: 2
-        x: 320
-        y: 540
-        width: 320
-        height: 180
+        x: 128
+        y: 216
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +155,10 @@ TextureImporter:
       name: 12_2
       rect:
         serializedVersion: 2
-        x: 640
-        y: 540
-        width: 320
-        height: 180
+        x: 256
+        y: 216
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -177,9 +177,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 360
-        width: 320
-        height: 180
+        y: 144
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +197,10 @@ TextureImporter:
       name: 12_4
       rect:
         serializedVersion: 2
-        x: 320
-        y: 360
-        width: 320
-        height: 180
+        x: 128
+        y: 144
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,10 +218,10 @@ TextureImporter:
       name: 12_5
       rect:
         serializedVersion: 2
-        x: 640
-        y: 360
-        width: 320
-        height: 180
+        x: 256
+        y: 144
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,9 +240,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 180
-        width: 320
-        height: 180
+        y: 72
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,10 +260,10 @@ TextureImporter:
       name: 12_7
       rect:
         serializedVersion: 2
-        x: 320
-        y: 180
-        width: 320
-        height: 180
+        x: 128
+        y: 72
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,10 +281,10 @@ TextureImporter:
       name: 12_8
       rect:
         serializedVersion: 2
-        x: 640
-        y: 180
-        width: 320
-        height: 180
+        x: 256
+        y: 72
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -304,8 +304,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 320
-        height: 180
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -323,10 +323,10 @@ TextureImporter:
       name: 12_10
       rect:
         serializedVersion: 2
-        x: 320
+        x: 128
         y: 0
-        width: 320
-        height: 180
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -344,10 +344,10 @@ TextureImporter:
       name: 12_11
       rect:
         serializedVersion: 2
-        x: 640
+        x: 256
         y: 0
-        width: 320
-        height: 180
+        width: 128
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -376,8 +376,6 @@ TextureImporter:
       12_1: 815645690
       12_10: -191564275
       12_11: 1056431251
-      12_12: -1579417438
-      12_13: -1150098738
       12_2: 609945393
       12_3: 1078535176
       12_4: 1182299716

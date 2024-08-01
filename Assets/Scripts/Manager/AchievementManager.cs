@@ -21,7 +21,6 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
 
     private void Start()
     {
-
         SetAchieveData();
     }
 
@@ -109,6 +108,7 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
             case 30:
             case 35:
             case 40:
+            case 45:
                 SaveAchievementData(i);
                 break;
             case 4:
@@ -144,7 +144,7 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
         }
     }    
 
-    private void SaveAchievementData(int num)
+    public void SaveAchievementData(int num)
     {
         DataManager.Instance.SaveAchievementData(num);
 

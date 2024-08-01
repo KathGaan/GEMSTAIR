@@ -231,12 +231,8 @@ public class TaroFunction
 
     public void Taro14()
     {
-        GameManager.Instance.PlayManager.SkipTurn();
-
-        for(int i = GameManager.Instance.PlayManager.TaroHand.childCount; i < 2;i++)
-        {
-            GameManager.Instance.PlayManager.AddTaro();
-        }
+        TaroGemFunction.BlockTaroGem += 2;
+        GameManager.Instance.PlayManager.VisualBlockTaroGem();
     }
 
     public void Taro15()

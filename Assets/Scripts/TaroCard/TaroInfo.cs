@@ -28,18 +28,6 @@ public class TaroInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private void Start()
     {
         ImageSetting();
-
-        OptionManager.Instance.changeLanguage += ChangeLanguageReset;
-    }
-
-    private void OnDisable()
-    {
-        OptionManager.Instance.changeLanguage -= ChangeLanguageReset;
-    }
-
-    private void ChangeLanguageReset()
-    {
-        infoText = "";
     }
 
     private void ImageSetting()
@@ -55,7 +43,6 @@ public class TaroInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void HintSetting()
     {
         ImageSetting();
-        ChangeLanguageReset();
     }
 
 
@@ -63,13 +50,10 @@ public class TaroInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (infoText.Length < 1)
-        {
-            infoText = TextManager.Instance.LoadString("TaroInfoText", cardNum);
+        infoText = TextManager.Instance.LoadString("TaroInfoText", cardNum);
 
-            infoImage.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
-        }
-
+        infoImage.GetComponentInChildren<TextMeshProUGUI>().text = infoText;
+        
         infoImage.gameObject.SetActive(true);
     }
 
