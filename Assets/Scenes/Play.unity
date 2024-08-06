@@ -7075,6 +7075,42 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1962555525}
     - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650549835084864914, guid: 8f08ecb7e299e114ab2bae587d570623, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

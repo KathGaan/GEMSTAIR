@@ -109,6 +109,9 @@ public class AchievementManager : MonoSingletonManager<AchievementManager>
             case 35:
             case 40:
             case 45:
+            case 50:
+            case 55:
+            case 60:
                 SaveAchievementData(i);
                 break;
             case 4:

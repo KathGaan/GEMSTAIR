@@ -663,26 +663,29 @@ public class PlayManager : MonoBehaviour
 
         int i = settingTransforms[(int)taroColor].childCount;
 
+        int dD = 0;
+
         for (int j = 0; j < i; j++)
         {
-            if (settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.color == CardColor.None)
+            if (settingTransforms[(int)taroColor].GetChild(dD).GetComponent<DragObject>().Info.color == CardColor.None)
             {
                 UniqueGemFunction.PlacedColor = TaroColor;
-                uniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.OnBreak, settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>());
+                uniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.OnBreak, settingTransforms[(int)taroColor].GetChild(dD).GetComponent<DragObject>());
             }
-            else if(settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.ab)
+            else if(settingTransforms[(int)taroColor].GetChild(dD).GetComponent<DragObject>().Info.ab)
             {
-                taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>());
+                taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)taroColor].GetChild(dD).GetComponent<DragObject>());
             }
 
             if(dontDestroy)
             {
                 dontDestroy = false;
                 PlayGetChilds();
+                dD++;
                 continue;
             }
 
-            settingTransforms[(int)taroColor].GetChild(0).SetParent(destroyGem);
+            settingTransforms[(int)taroColor].GetChild(dD).SetParent(destroyGem);
         }
     }
 
@@ -692,26 +695,29 @@ public class PlayManager : MonoBehaviour
 
         int i = settingTransforms[(int)color].childCount;
 
+        int dD = 0;
+
         for (int j = 0; j < i; j++)
         {
-            if (settingTransforms[(int)taroColor].GetChild(0).GetComponent<DragObject>().Info.color == CardColor.None)
+            if (settingTransforms[(int)color].GetChild(dD).GetComponent<DragObject>().Info.color == CardColor.None)
             {
                 UniqueGemFunction.PlacedColor = color;
-                uniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.OnBreak, settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>());
+                uniqueGemFunction.ActiveFunction(UniqueGemFunction.LoadAt.OnBreak, settingTransforms[(int)color].GetChild(dD).GetComponent<DragObject>());
             }
-            else if (settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>().Info.ab)
+            else if (settingTransforms[(int)color].GetChild(dD).GetComponent<DragObject>().Info.ab)
             {
-                taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)color].GetChild(0).GetComponent<DragObject>());
+                taroGemFunction.ActiveFunction(TaroGemFunction.LoadAt.OnBreak, settingTransforms[(int)color].GetChild(dD).GetComponent<DragObject>());
             }
 
             if (dontDestroy)
             {
                 dontDestroy = false;
                 PlayGetChilds();
+                dD++;
                 continue;
             }
 
-            settingTransforms[(int)color].GetChild(0).SetParent(destroyGem);
+            settingTransforms[(int)color].GetChild(dD).SetParent(destroyGem);
         }
     }
 
