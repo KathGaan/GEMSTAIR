@@ -67,6 +67,13 @@ public class LevelData : ScriptableObject
         get { return taroHint; }
     }
 
+    [SerializeField] List<int> banTaro;
+
+    public List<int> BanTaro
+    {
+        get { return banTaro; }
+    }
+
     public void DeepCopy(LevelData cdata)
     {
         cdata.redField = new List<Card>();

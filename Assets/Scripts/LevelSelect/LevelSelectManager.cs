@@ -14,6 +14,8 @@ public class LevelSelectManager : MonoBehaviour
 
     [SerializeField] GameObject hintUI;
 
+    [SerializeField] GameObject FinishText;
+
     private void Start()
     {
         GetLevelData();
@@ -40,7 +42,7 @@ public class LevelSelectManager : MonoBehaviour
     {
         for (int i = 0; i < levels.Count; i++)
         {
-            levels[i].GetComponentInChildren<TextMeshProUGUI>().text = "" + i;
+            levels[i].GetComponentInChildren<TextMeshProUGUI>().text = "" + (i + 1);
         }
     }
 
@@ -63,6 +65,12 @@ public class LevelSelectManager : MonoBehaviour
     {
         SoundManager.Instance.ButtonSound();
 
+        if(GameManager.Instance.selectedLevel == 61)
+        {
+            StartCoroutine(AsyncSceneLoadManager.Instance.AsyncSceneLoad(SceneName.MainMenu));
+            return;
+        }
+
         GameManager.Instance.LoadSelectedLevelData();
 
         if (GameManager.Instance.selectedLevel == 0)
@@ -77,11 +85,16 @@ public class LevelSelectManager : MonoBehaviour
 
     private void ButtonSet()
     {
-        for(int i = 0; i < DataManager.Instance.Data.ClearData.Count + 1; i++)
+        for(int i = 0; i < DataManager.Instance.Data.ClearData.Count; i++)
         {
             if (levels.Count > i)
             {
                 levels[i].GetComponent<Button>().interactable = true;
+            }
+
+            if(i == 60)
+            {
+                FinishText.GetComponent<Button>().interactable = true;
             }
         }
     }

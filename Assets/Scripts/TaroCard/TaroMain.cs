@@ -50,6 +50,8 @@ public class TaroMain : MonoBehaviour
             taroCards[14].GetComponent<Button>().interactable = false;
         }
 
+        SetBanTaro();
+
         OptionManager.Instance.changeLanguage += TextSet;
         OptionManager.Instance.changeLanguage += howManyText;
     }
@@ -58,6 +60,14 @@ public class TaroMain : MonoBehaviour
     {
         OptionManager.Instance.changeLanguage -= TextSet;
         OptionManager.Instance.changeLanguage -= howManyText;
+    }
+
+    private void SetBanTaro()
+    {
+        for(int i = 0; i < ResourcesManager.Instance.LoadScript(GameManager.Instance.selectedLevel).BanTaro.Count; i++)
+        {
+            taroCards[ResourcesManager.Instance.LoadScript(GameManager.Instance.selectedLevel).BanTaro[i]].GetComponent<Button>().interactable = false;
+        }
     }
 
     private void TextSet()

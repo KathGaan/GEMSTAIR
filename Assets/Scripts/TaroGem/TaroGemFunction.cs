@@ -169,11 +169,11 @@ public class TaroGemFunction
         {
             case LoadAt.PlayerUse:
             case LoadAt.CpuUse:
-                if (Blocked())
-                    return;
-
                 if (targetObj.Info == targetObj.transform.parent.GetChild(0).GetComponent<DragObject>().Info)
                 {
+                    if (Blocked())
+                        return;
+
                     GameManager.Instance.PlayManager.LevelFailed();
                 }
                 break;
