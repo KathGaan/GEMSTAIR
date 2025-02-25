@@ -12,7 +12,7 @@ public class MonoSingletonManager<T> : MonoBehaviour where T : MonoBehaviour
     {
         if (Instance == null)
         {
-            Instance = (T)FindObjectOfType(typeof(T));
+            Instance = (T)FindFirstObjectByType(typeof(T));
         }
         else
         {

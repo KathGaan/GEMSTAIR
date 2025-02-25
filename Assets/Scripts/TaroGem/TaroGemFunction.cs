@@ -213,6 +213,9 @@ public class TaroGemFunction
                 if (Blocked())
                     return;
 
+                if (GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount <= 1)
+                    return;
+
                 GameManager.Instance.PlayManager.GetColorParent(targetObj.Info.color).RemoveAt(GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount - 2);
                 GameManager.Instance.PlayManager.DestroyGem(
                 GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).GetChild(GameManager.Instance.PlayManager.GetParentTransform(targetObj.Info.color).childCount - 2)
